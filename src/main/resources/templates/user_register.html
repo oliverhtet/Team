@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>SE2020</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/user-profile.css" />
+<!-- JS -->
+<script src="/js/bootstrap.min.js"></script>
+<script>
+	$('.datepicker').datepicker({
+		format : 'mm/dd/yyyy',
+	});
+</script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">SE 2020 CONTEST</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link"
+						th:href="@{/user_list}">Home <span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Services</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container emp-profile">
+		<div id="login">
+			<h3 class="text-center text-white pt-5">Create Form</h3>
+			<div class="container">
+				<div id="login-row"
+					class="row justify-content-center align-items-center">
+					<div id="login-column" class="col-md-6">
+						<div id="login-box" class="col-md-12">
+							<form th:action="@{/create_user}" th:object="${user}"
+								method="post">
+								<h3 class="text-left text-info">Create User</h3>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">User Name</label>
+									</div>
+									<div class="col-md-6">
+										<input type="text" th:field="*{name}" class="form-control"
+											id="id_name" required>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">User Email</label>
+									</div>
+									<div class="col-md-6">
+										<input type="email" th:field="*{email}" class="form-control"
+											id="id_email" required>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">Password</label>
+									</div>
+									<div class="col-md-6">
+										<input type="password" th:field="*{password}"
+											class="form-control" id="id_password" required>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">Date Of Birth</label>
+									</div>
+									<div class="col-md-6">
+										<input type="date" th:field="*{dob}" class="form-control"
+											id="id_dob">
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">Phone No.</label>
+									</div>
+									<div class="col-md-6">
+										<input type="number" th:field="*{phone}" class="form-control"
+											id="id_phone" required>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">NRC.</label>
+									</div>
+									<div class="col-md-6">
+										<input type="text" th:field="*{nrc}" class="form-control"
+											id="id_nrc" required>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<label class="text-info">Address</label>
+									</div>
+									<div class="col-md-6">
+										<textarea th:field="*{address}" id="id_address"
+											class="md-textarea form-control"></textarea>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-6">
+										<input type="submit" name="submit"
+											class="btn btn-primary btn-md" value="Save"> <a
+											th:href="@{/user_list}" class="btn btn-primary">Back</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
