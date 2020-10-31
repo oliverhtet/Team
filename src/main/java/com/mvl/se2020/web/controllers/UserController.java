@@ -31,6 +31,7 @@ public class UserController {
 	public UserRepository userRepository;
 	public AccountType accountType;
 
+	//test commit zmh
 	// SampleDateFormat formatter = new SampleDateFormat("dd-MM-yyyy");
 
 	@RequestMapping("/index")
