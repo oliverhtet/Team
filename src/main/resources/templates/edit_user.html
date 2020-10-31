@@ -47,24 +47,25 @@
 	<div class="container">
 		<form th:action="@{/edit_user}" th:object="${user}" method="post">
 			<h3 class="text-left text-info">Edit User</h3>
-			<input type="hidden" th:field="*{password}"/>
-			<input type="hidden" th:field="*{id}"/>
-			<br>
+			<input type="hidden" th:field="*{password}" /> <input type="hidden"
+				th:field="*{id}" /> <br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
 					<label class="text-info">User Name</label>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<input type="text" th:field="*{name}" class="form-control"
 						id="id_name" required>
 				</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
 					<label class="text-info">User Email</label>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<input type="email" th:field="*{email}" class="form-control"
 						id="id_email" required>
 				</div>
@@ -81,51 +82,58 @@
 			</div> -->
 			<br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
 					<label class="text-info">Date Of Birth</label>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<input type="date" th:field="*{dob}" class="form-control"
 						id="id_dob">
 				</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
 					<label class="text-info">Phone No.</label>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<input type="number" th:field="*{phone}" class="form-control"
 						id="id_phone" required>
 				</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
 					<label class="text-info">NRC.</label>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<input type="text" th:field="*{nrc}" class="form-control"
 						id="id_nrc" required>
 				</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
 					<label class="text-info">Address</label>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<textarea th:field="*{address}" id="id_address"
 						class="md-textarea form-control"></textarea>
 				</div>
 			</div>
-			
+
 			<br>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-4"></div>
+				<div class="col-md-2">
 					<input type="submit" name="submit" class="btn btn-primary btn-md"
-						value="Save"> <a th:href="@{/user_list}"
-						class="btn btn-primary">Back</a>
+						value="Save" style="width: 80%">
+				</div>
+				<div class="col-md-2">
+					<a th:href="@{/user_list}" class="btn btn-primary" style="width: 80%">Back</a>
 				</div>
 			</div>
 		</form>
