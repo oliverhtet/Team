@@ -24,14 +24,13 @@ import com.mvl.se2020.web.models.User;
 import com.mvl.se2020.web.repository.UserRepository;
 
 @Controller
-
 public class UserController {
 
 	@Autowired
 	public UserRepository userRepository;
 	public AccountType accountType;
 
-	//test commit zmh
+	// test commit zmh
 	// SampleDateFormat formatter = new SampleDateFormat("dd-MM-yyyy");
 
 	@RequestMapping("/index")
@@ -46,28 +45,29 @@ public class UserController {
 	public String userLogin(Model model, @ModelAttribute User user, HttpSession session) {
 
 		User service_user = userRepository.checkUser(user.getEmail(), user.getPassword());
-		session.setAttribute("user", service_user);
 
 		if (service_user == null) {
 			System.out.println("There is no user match with this email.");
+			return "index";
 		} else {
-			model.addAttribute("accountType", accountType);
-			model.addAttribute("user", service_user);
+			if (service_user.getAccountType() == AccountType.ADMIN) {
 
-			if (session.getAttribute("user") != null) {
-				System.out.println(session.getAttribute("user").toString() + " <<<<<<<session");
+				session.setAttribute("user", service_user);
+				return "redirect:/user_list";
+			} else {
+				System.out.println("Other Account Type");
+				return "index";
 			}
 
-			return "redirect:/welcome";
 		}
-
-		model.addAttribute("user", user);
-		return "redirect:/index";
 	}
 
 	@RequestMapping("/user_list")
-	public String userList(Model model) {
+	public String userList(Model model, HttpSession session) {
 		List<User> userList = userRepository.findAll();
+
+		User u = (User) session.getAttribute("user");
+		System.out.println(">>>>>>>>>>>>>>" + u.getName());
 
 		System.out.println("User List Method");
 		model.addAttribute("users", userList);
@@ -162,13 +162,12 @@ public class UserController {
 
 		return "redirect:/user_list";
 	}
-	
+
 	@RequestMapping("/delete_user/{id}")
 	public String userDelete(Model model, @PathVariable Long id) {
 
 		User user = userRepository.findById(id).orElseThrow();
 
-		
 		model.addAttribute("user", user);
 
 		return "edit_user";

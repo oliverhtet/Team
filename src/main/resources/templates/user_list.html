@@ -12,6 +12,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/user-profile.css" />
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 
@@ -40,8 +41,18 @@
 			</div>
 		</div>
 	</nav>
+	<!-- end of nav -->
 
-
+	<!-- menu bar -->
+	<div>
+		<div class="sidebar">
+			<a class="active" th:href="@{/user_list}">Users</a> <a href="#news"
+				th:href="@{/warehouse_list}">Warehouses</a> <a href="#contact"
+				th:href="@{/product_list}">Product</a> <a href="#about"
+				th:href="@{/welcome}">Profile</a>
+		</div>
+	</div> <!-- end of menu -->
+	
 	<!-- Page Content -->
 	<div class="container">
 		<br>

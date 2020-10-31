@@ -44,6 +44,16 @@
 			</div>
 		</div>
 	</nav>
+	<!-- menu bar -->
+	<div>
+		<div class="sidebar">
+			<a class="active" th:href="@{/user_list}">Users</a> <a href="#news"
+				th:href="@{/warehouse_list}">Warehouses</a> <a href="#contact"
+				th:href="@{/product_list}">Product</a> <a href="#about"
+				th:href="@{/welcome}">Profile</a>
+		</div>
+	</div>
+	<!-- end of menu -->
 	<div id="login">
 		<div class="container">
 			<div id="login-row"
@@ -132,7 +142,7 @@
 										class="btn btn-primary btn-md" value="Save">
 								</div>
 								<div class="col-md-2">
-										 <a th:href="@{/user_list}" class="btn btn-primary">Back</a>
+									<a th:href="@{/user_list}" class="btn btn-primary">Back</a>
 								</div>
 							</div>
 						</form>

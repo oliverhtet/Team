@@ -59,6 +59,28 @@ public class User {
 	@Column(name = "address")
 	private String address;
 
+	@Column(name = "create_user")
+	private Long createUserId;
+
+	@Column(name = "modified_user")
+	private Long modifiedUserId;
+
+	public Long getCreateUserId() {
+		return createUserId;
+	}
+
+	public void setCreateUserId(Long createUserId) {
+		this.createUserId = createUserId;
+	}
+
+	public Long getModifiedUserId() {
+		return modifiedUserId;
+	}
+
+	public void setModifiedUserId(Long modifiedUserId) {
+		this.modifiedUserId = modifiedUserId;
+	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -159,7 +181,8 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
 				+ status + ", accountType=" + accountType + ", phone=" + phone + ", dob=" + dob + ", createDate="
-				+ createDate + ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address=" + address + "]";
+				+ createDate + ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address=" + address
+				+ ", createUserId=" + createUserId + ", modifiedUserId=" + modifiedUserId + "]";
 	}
 
 }
