@@ -51,8 +51,9 @@
 				th:href="@{/product_list}">Product</a> <a href="#about"
 				th:href="@{/welcome}">Profile</a>
 		</div>
-	</div> <!-- end of menu -->
-	
+	</div>
+	<!-- end of menu -->
+
 	<!-- Page Content -->
 	<div class="container">
 		<br>
@@ -77,6 +78,7 @@
 						<th scope="col">Email</th>
 						<th scope="col">Phone</th>
 						<th scope="col">Role</th>
+						<th scope="col">Birthday</th>
 						<th scope="col">Create Date</th>
 						<th scope="col">Modified Date</th>
 						<th scope="col"></th>
@@ -90,8 +92,9 @@
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.phone}"></td>
 						<td th:text="${user.accountType}"></td>
-						<td th:text="${user.createDate}"></td>
-						<td th:text="${user.modifiedDate}"></td>
+						<td th:text="${#dates.format(user.dob, 'dd/MM/yyyy')}" ></td>
+						<td th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}" ></td>
+						<td th:text="${#dates.format(user.modifiedDate, 'dd/MM/yyyy')}" ></td>
 						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"
 							class="btn btn-primary">Edit</a></td>
 						<td><a th:href="@{/delete_user/{id}(id=${user.id})}"

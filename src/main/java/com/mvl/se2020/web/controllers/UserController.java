@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,12 +23,15 @@ import com.mvl.se2020.web.enumerations.AccountType;
 import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.User;
 import com.mvl.se2020.web.repository.UserRepository;
+import com.mvl.se2020.web.repository.WarehouseRepositroy;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	public UserRepository userRepository;
+	public WarehouseRepositroy wareRepo;
+	
 	public AccountType accountType;
 
 	// test commit zmh
@@ -66,9 +70,10 @@ public class UserController {
 	public String userList(Model model, HttpSession session) {
 		List<User> userList = userRepository.findAll();
 
-		User u = (User) session.getAttribute("user");
-		System.out.println(">>>>>>>>>>>>>>" + u.getName());
-
+		/*
+		 * User u = (User) session.getAttribute("user");
+		 * System.out.println(">>>>>>>>>>>>>>" + u.getName());
+		 */
 		System.out.println("User List Method");
 		model.addAttribute("users", userList);
 
@@ -118,12 +123,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
-	public String userRegisterSubmit(Model model, @ModelAttribute User user) {
+	public String userRegisterSubmit(Model model, @ModelAttribute User user, HttpSession session, BindingResult bind) {
 		user.setAccountType(AccountType.ADMIN);
 		user.setStatus(Status.ENABLE);
 		user.setCreateDate(new Date());
 		user.setModifiedDate(new Date());
 
+		
+		System.out.println(bind.toString());
 		model.addAttribute("user", user);
 
 		userRepository.save(user);

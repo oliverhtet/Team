@@ -16,8 +16,19 @@
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 <script>
-	$('.datepicker').datepicker({
-		format : 'mm/dd/yyyy',
+	$(document).ready(function() {
+		$(document).on('click', '.dob', function() {
+			$(this).datetimepicker({
+				language : 'fr',
+				endDate : '-16y',
+				weekStart : 1,
+				todayBtn : 1,
+				autoclose : 1,
+				startView : 2,
+				minView : 2,
+				forceParse : 0
+			}).focus();
+		});
 	});
 </script>
 </head>
@@ -100,8 +111,8 @@
 									<label class="text-info">Date Of Birth</label>
 								</div>
 								<div class="col-md-6">
-									<input type="date" th:field="*{dob}" class="form-control"
-										id="id_dob">
+									<input type="text" th:field="*{dob}" class="form-control dob"
+										data-date-format="dd/MM/yyyy" id="id_dob">
 								</div>
 							</div>
 							<br>
@@ -134,6 +145,19 @@
 										class="md-textarea form-control"></textarea>
 								</div>
 							</div>
+							<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">Account Type</label>
+							</div>
+							<div class="col-md-6">
+								<select name="location" class="browser-default custom-select">
+									<option
+										th:each="accType : ${T(com.mvl.se2020.web.enumerations.AccountType).values()}"
+										th:value="${accType}" th:text="${accType}"></option>
+								</select>
+							</div>
+						</div>
 							<br>
 							<div class="row">
 								<div class="col-md-4"></div>

@@ -39,7 +39,10 @@ public class User {
 	private AccountType accountType;
 
 	@Column(name = "user_phone")
-	private Integer phone;
+	private String phone;
+
+	@Column(name = "warehouse_id")
+	private Long ware_id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_of_birth")
@@ -64,6 +67,14 @@ public class User {
 
 	@Column(name = "modified_user")
 	private Long modifiedUserId;
+
+	public Long getWare_id() {
+		return ware_id;
+	}
+
+	public void setWare_id(Long ware_id) {
+		this.ware_id = ware_id;
+	}
 
 	public Long getCreateUserId() {
 		return createUserId;
@@ -105,10 +116,6 @@ public class User {
 		this.address = address;
 	}
 
-	public Integer getPhone() {
-		return phone;
-	}
-
 	public AccountType getAccountType() {
 		return accountType;
 	}
@@ -133,7 +140,11 @@ public class User {
 		this.nrc = nrc;
 	}
 
-	public void setPhone(Integer phone) {
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -180,9 +191,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
-				+ status + ", accountType=" + accountType + ", phone=" + phone + ", dob=" + dob + ", createDate="
-				+ createDate + ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address=" + address
-				+ ", createUserId=" + createUserId + ", modifiedUserId=" + modifiedUserId + "]";
+				+ status + ", accountType=" + accountType + ", phone=" + phone + ", ware_id=" + ware_id + ", dob=" + dob
+				+ ", createDate=" + createDate + ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address="
+				+ address + ", createUserId=" + createUserId + ", modifiedUserId=" + modifiedUserId + "]";
 	}
 
 }
