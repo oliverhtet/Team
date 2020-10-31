@@ -11,25 +11,23 @@
 <title>Login</title>
 
 <!-- CSS -->
+<link th:href="@{css/style.css}" rel="stylesheet" />
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-		<span class="navbar-brand">SE2020 Contest</span>
-	</nav>
-	<div class="container-fluid">
+	
+	
 		<div id="login">
-			<h3 class="text-center text-white pt-5">Login form</h3>
 			<div class="container">
 				<div id="login-row"
-					class="row justify-content-center align-items-center">
-					<div id="login-column" class="col-md-6">
+					class="row justify-content-center align-items-center" style="margin-top: 10%">
+					<div id="login-column" class="col-md-4" style="background-color: yellow">
 						<div id="login-box" class="col-md-12">
 							<form th:action="@{/index}" th:object="${user}" method="post">
-								<h3 class="text-center text-info">Login</h3>
+								<h3 class="text-center text-info">Welcome!</h3>
 								<div class="form-group">
 									<label for="username" class="text-info">User name:</label><br>
 									<input type="email" th:field="*{email}" class="form-control"
@@ -44,17 +42,15 @@
 									<label for="remember-me" class="text-info"><span>Remember
 											me</span> <span><input id="remember-me" name="remember-me"
 											type="checkbox"></span></label><br> <input type="submit"
-										name="submit" class="btn btn-dark btn-md" value="submit">
+										name="submit" class="btn btn-dark btn-md" style="width:100%" value="submit">
 								</div>
-								<div id="register-link" class="text-right">
-									<a th:href="@{/create_user}" class="text-info">Register here</a>
-								</div>
+								
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	
 </body>
 </html>
