@@ -7,50 +7,34 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <title>Login</title>
 
 <!-- CSS -->
-<link th:href="@{css/style.css}" rel="stylesheet" />
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link th:href="@{css/login.css}" rel="stylesheet" />
 <!-- JS -->
-<script src="/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-	
-	
-		<div id="login">
-			<div class="container">
-				<div id="login-row"
-					class="row justify-content-center align-items-center" style="margin-top: 10%">
-					<div id="login-column" class="col-md-4" style="background-color: yellow">
-						<div id="login-box" class="col-md-12">
-							<form th:action="@{/index}" th:object="${user}" method="post">
-								<h3 class="text-center text-info">Welcome!</h3>
-								<div class="form-group">
-									<label for="username" class="text-info">User name:</label><br>
-									<input type="email" th:field="*{email}" class="form-control"
-										id="id_email" required>
-								</div>
-								<div class="form-group">
-									<label for="password" class="text-info">Password:</label><br>
-									<input type="password" th:field="*{password}"
-										class="form-control" id="id_email" required>
-								</div>
-								<div class="form-group">
-									<label for="remember-me" class="text-info"><span>Remember
-											me</span> <span><input id="remember-me" name="remember-me"
-											type="checkbox"></span></label><br> <input type="submit"
-										name="submit" class="btn btn-dark btn-md" style="width:100%" value="submit">
-								</div>
-								
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	
+
+
+	<div class="login-box">
+		<img th:src="@{/img/avatar.png}" class="avatar"/>
+		<h1>Login Here</h1>
+
+		<form th:action="@{/index}" th:object="${user}" method="post">
+		<p>Email</p>
+			   <input type="text" th:field="*{email}" id="id_email" required
+				placeholder="Enter Email">
+				
+				<p>Password</p>
+				 <input type="password" th:field="*{password}" id="id_password" required
+				placeholder="Enter Password"> 
+				
+				<input type="submit"
+				name="submit" value="submit">
+
+		</form>
+
+	</div>
 </body>
 </html>
