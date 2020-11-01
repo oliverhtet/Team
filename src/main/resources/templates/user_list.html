@@ -46,7 +46,8 @@
 	<!-- menu bar -->
 	<div>
 		<div class="sidebar">
-			<a class="active" th:href="@{/user_list}">Users</a> <a href="#news"
+			<a class="active" th:href="@{/user_list}">Users</a> 
+			<a href="#news"
 				th:href="@{/warehouse_list}">Warehouses</a> <a href="#contact"
 				th:href="@{/product_list}">Product</a> <a href="#about"
 				th:href="@{/welcome}">Profile</a>
@@ -92,9 +93,9 @@
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.phone}"></td>
 						<td th:text="${user.accountType}"></td>
-						<td th:text="${#dates.format(user.dob, 'dd/MM/yyyy')}" ></td>
-						<td th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}" ></td>
-						<td th:text="${#dates.format(user.modifiedDate, 'dd/MM/yyyy')}" ></td>
+						<td th:text="${#dates.format(user.dob, 'dd/MM/yyyy')}"></td>
+						<td th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}"></td>
+						<td th:text="${#dates.format(user.modifiedDate, 'dd/MM/yyyy')}"></td>
 						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"
 							class="btn btn-primary">Edit</a></td>
 						<td><a th:href="@{/delete_user/{id}(id=${user.id})}"

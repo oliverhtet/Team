@@ -151,9 +151,9 @@
 								<label class="text-info">Account Type</label>
 							</div>
 							<div class="col-md-6">
-								<select name="location" class="browser-default custom-select">
+								<select name="accountType" class="browser-default custom-select" th:field="*{accountType}">
 									<option
-										th:each="accType : ${T(com.mvl.se2020.web.enumerations.AccountType).values()}"
+										th:each="accType : ${accountType}"
 										th:value="${accType}" th:text="${accType}"></option>
 								</select>
 							</div>
