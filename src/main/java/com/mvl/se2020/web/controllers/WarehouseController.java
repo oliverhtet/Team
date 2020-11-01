@@ -28,12 +28,12 @@ public class WarehouseController {
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
 
-		if (session.getAttribute("user") == null) {
-			System.out.println("User Session is null");
-		} else {
-			session.setAttribute("user", session);
-			System.out.println("User Session is " + session.getAttribute("user"));
-		}
+		/*
+		 * if (session.getAttribute("user") == null) {
+		 * System.out.println("User Session is null"); } else {
+		 * session.setAttribute("user", session); System.out.println("User Session is "
+		 * + session.getAttribute("user")); }
+		 */
 		List<Warehouse> wareList = wareRepo.findAll();
 
 		model.addAttribute("warehouses", wareList);
