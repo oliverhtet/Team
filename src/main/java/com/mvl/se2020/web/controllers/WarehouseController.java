@@ -21,9 +21,8 @@ import com.mvl.se2020.web.repository.WarehouseRepositroy;
 @Controller
 public class WarehouseController {
 
-	public Location location;
 	@Autowired
-	public WarehouseRepositroy wareRepo;
+	private WarehouseRepositroy wareRepo;
 
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
@@ -48,7 +47,7 @@ public class WarehouseController {
 
 		Warehouse ware = new Warehouse();
 
-		model.addAttribute("location", location);
+		model.addAttribute("locationList", Location.values());
 		model.addAttribute("warehouse", ware);
 		System.out.println("Warehouse Create Method");
 
@@ -59,10 +58,6 @@ public class WarehouseController {
 	@RequestMapping(value = "/create_ware", method = RequestMethod.POST)
 	public String wareCreatePost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
 
-		/*
-		 * User u = (User) session.getAttribute("user"); System.out.println(u.toString()
-		 * + ">>>>>>>>>>>>>>>");
-		 */
 		warehouse.setStatus(Status.ENABLE);
 		warehouse.setCreateDate(new Date());
 		warehouse.setModifiedDate(new Date());
@@ -85,6 +80,7 @@ public class WarehouseController {
 
 		Warehouse ware = wareRepo.findById(id).orElseThrow();
 		model.addAttribute("warehouse", ware);
+		model.addAttribute("locationList", Location.values());
 		System.out.println("Warehouse Edit Method");
 
 		return "edit_ware";
@@ -93,14 +89,13 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/edit_ware", method = RequestMethod.POST)
 	public String wareEditPost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
-		warehouse.setModifiedDate(new Date());
-		/*
-		 * warehouse.setCreateUserId(u.getId()); warehouse.setModifiedUserId(u.getId());
-		 */
+		Warehouse w = warehouse;
+		w.setModifiedDate(new Date());
 
-		wareRepo.save(warehouse);
+		wareRepo.save(w);
 
 		List<Warehouse> wareList = wareRepo.findAll();
+
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
 

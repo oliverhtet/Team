@@ -48,16 +48,13 @@ public class Warehouse {
 	@Column(name = "modified_user")
 	private Long modifiedUserId;
 
-	@Column(name = "product_id")
-	private Long productId;
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
+	/*
+	 * @Column(name = "product_id") private Long productId;
+	 * 
+	 * public Long getProductId() { return productId; }
+	 * 
+	 * public void setProductId(Long productId) { this.productId = productId; }
+	 */
 
 	public Long getId() {
 		return id;

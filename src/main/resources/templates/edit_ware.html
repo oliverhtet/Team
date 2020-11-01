@@ -57,7 +57,7 @@
 	<div class="container">
 		<form th:action="@{/edit_ware}" th:object="${warehouse}" method="post">
 			<h3 class="text-left text-info">Edit Warehouse</h3>
-			<input type="hidden" th:field="*{id}" /> <br>
+			<input type="hidden" th:field="*{id}" /><br>
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-3">
@@ -74,10 +74,10 @@
 					<label class="text-info">Location</label>
 				</div>
 				<div class="col-md-3">
-					<select name="location" class="browser-default custom-select">
-						<option
-							th:each="locationOpt : ${T(com.mvl.se2020.web.enumerations.Location).values()}"
-							th:value="${locationOpt}" th:text="${locationOpt}"></option>
+					<select name="location" class="browser-default custom-select"
+						th:field="*{location}">
+						<option th:each="location : ${locationList}"
+							th:value="${location}" th:text="${location}"></option>
 					</select>
 				</div>
 			</div>
