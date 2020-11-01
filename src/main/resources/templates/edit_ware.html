@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>SE2020</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/user-profile.css" />
+<!-- JS -->
+<script src="/js/bootstrap.min.js"></script>
+<script>
+	$('.datepicker').datepicker({
+		format : 'mm/dd/yyyy',
+	});
+</script>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">SE 2020 CONTEST</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link"
+						th:href="@{/user_list}">Home <span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Services</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- menu bar -->
+	<div>
+		<div class="sidebar">
+			<a class="active" th:href="@{/user_list}">Users</a> <a href="#news"
+				th:href="@{/warehouse_list}">Warehouses</a> <a href="#contact"
+				th:href="@{/product_list}">Product</a> <a href="#about"
+				th:href="@{/welcome}">Profile</a>
+		</div>
+	</div>
+	<!-- end of menu -->
+
+	<div class="container">
+		<form th:action="@{/edit_ware}" th:object="${warehouse}" method="post">
+			<h3 class="text-left text-info">Edit Warehouse</h3>
+			<input type="hidden" th:field="*{id}" /> <br>
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
+					<label class="text-info">Name</label>
+				</div>
+				<div class="col-md-3">
+					<input type="text" th:field="*{name}" class="form-control"
+						id="id_name" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
+					<label class="text-info">Location</label>
+				</div>
+				<div class="col-md-3">
+					<select name="location" class="browser-default custom-select">
+						<option
+							th:each="locationOpt : ${T(com.mvl.se2020.web.enumerations.Location).values()}"
+							th:value="${locationOpt}" th:text="${locationOpt}"></option>
+					</select>
+				</div>
+			</div>
+
+			<br>
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-2">
+					<input type="submit" name="submit" class="btn btn-primary btn-md"
+						value="Save" style="width: 80%">
+				</div>
+				<div class="col-md-2">
+					<a th:href="@{/warehouse_list}" class="btn btn-primary"
+						style="width: 80%">Back</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
