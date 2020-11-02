@@ -118,31 +118,14 @@ public class ProductController {
 
 	@RequestMapping(value = "/filter_product", method = RequestMethod.POST)
 	public String productSearch(Model model, @ModelAttribute Product p) {
-		/*
-		 * List<Product> plist = null; if (p.getName() != null) {
-		 * 
-		 * if(p.getName()!=null && p.getWareId()!=null && p.getCatagory()!=null) {
-		 * if(p.getName()!=null & p.getWareId()!=null && p.getCatagory()==null) {
-		 * if(p.getName()!=null & p.getWareId()==null && p.getCatagory()!=null) {
-		 * if(p.getName()!=null & p.getWareId()==null && p.getCatagory()==null) {
-		 * if(p.getName()==null & p.getWareId()!=null && p.getCatagory()!=null) {
-		 * if(p.getName()==null & p.getWareId()==null && p.getCatagory()!=null) {
-		 * if(p.getName()==null & p.getWareId()!=null && p.getCatagory()==null) { plist
-		 * = productRepo.findByWareId(p.getWareId()); }
-		 * 
-		 * plist = productRepo.findByCategory(p.getCatagory().toString()); }
-		 * 
-		 * plist = productRepo.findByName(p.getName().toLowerCase()); } plist =
-		 * productRepo.findByWareAndCategory(p.getWareId(),p.getCatagory().toString());
-		 * }
-		 * 
-		 * } } plist =
-		 * productRepo.findByAll(p.getName().toLowerCase(),p.getWareId(),p.getCatagory()
-		 * .toString()); }
-		 * 
-		 * } else { plist = productRepo.findAllProduct(Status.ENABLE.toString()); }
-		 */
-		List<Product> plist = productRepo.findAllProduct(Status.ENABLE.toString());
+
+		List<Product> plist = null;
+		if (p.getName() != null) {
+			plist = productRepo.findByName(p.getName().toLowerCase());
+		} else {
+			plist = productRepo.findAllProduct(Status.ENABLE.toString());
+		}
+
 		model.addAttribute("productList", plist);
 
 		List<Warehouse> wlist = wareRepo.findAllEnable(Status.ENABLE.toString());
