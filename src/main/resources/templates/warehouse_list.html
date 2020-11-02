@@ -16,14 +16,14 @@
 	<!-- Navigation -->
 	<nav class="main-menu">
 		<ul>
-			<li><a th:href="@{/user_list}"> <i class="fa fa-user fa-2x"></i>
+			<li class="has-subnav"><a th:href="@{/user_list}"> <i class="fa fa-user fa-2x"></i>
 					<span class="nav-text"> User Management </span>
 			</a></li>
 			<li class="has-subnav active"><a th:href="@{/warehouse_list}">
 					<i class="fa fa-home fa-2x"></i> <span class="nav-text">
 						Warehouse Management </span>
 			</a></li>
-			<li class="has-subnav"><a href="#"> <i
+			<li class="has-subnav"><a th:href="@{/product_list}"> <i
 					class="fa fa-list fa-2x"></i> <span class="nav-text">
 						Products Management </span>
 			</a></li>
@@ -38,23 +38,14 @@
 		</ul>
 	</nav>
 
-
-
-
-
-
 	<br>
-	
 	<div class="container">
-
-		
-
 		<div class="row">
-		
+
 			<div class="card">
 
 				<div>
-			
+
 					<a th:href="@{/create_ware}" class="btn btn-primary btn-md"
 						style="float: right;">New</a>
 				</div>
