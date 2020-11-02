@@ -13,6 +13,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/user-profile.css" />
+<link th:href="@{css/warehouse_list.css}" rel="stylesheet" />
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 <script>
@@ -22,29 +23,33 @@
 </script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-		<div class="container">
-			<a class="navbar-brand" href="#">SE 2020 CONTEST</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarResponsive" aria-controls="navbarResponsive"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						th:href="@{/user_list}">Home <span class="sr-only">(current)</span>
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Services</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Contact</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+	<!-- Navigation -->
+	<nav class="main-menu">
+		<ul>
+			<li class="has-subnav "><a th:href="@{/user_list}"> <i
+					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
+						Management </span>
+			</a></li>
+			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
+					class="fa fa-home fa-2x"></i> <span class="nav-text">
+						Warehouse Management </span>
+			</a></li>
+			<li class="has-subnav active"><a th:href="@{/product_list}">
+					<i class="fa fa-list fa-2x"></i> <span class="nav-text">
+						Products Management </span>
+			</a></li>
+
+		</ul>
+
+		<ul class="logout">
+			<li><a th:href="@{/logout}" class="nav-link"> <i
+					class="fa fa-power-off fa-2x"></i> <span class="nav-text">
+						Logout </span>
+			</a></li>
+		</ul>
 	</nav>
-	<!-- menu bar -->
+	<!-- end of nav -->
+	<!-- 
 	<div>
 		<div class="sidebar">
 			<a class="active" th:href="@{/user_list}">Users</a> <a
@@ -52,7 +57,8 @@
 				th:href="@{/product_list}">Product</a> <a th:href="@{/welcome}">Profile</a>
 		</div>
 	</div>
-	<!-- end of menu -->
+	end of menu -->
+	<br>
 	<div class="container">
 		<div id="login-row"
 			class="row justify-content-center align-items-center">
@@ -126,7 +132,7 @@
 									class="btn btn-primary btn-md" value="Save">
 							</div>
 							<div class="col-md-2">
-								<a th:href="@{/warehouse_list}" class="btn btn-primary">Back</a>
+								<a th:href="@{/product_list}" class="btn btn-primary">Back</a>
 							</div>
 						</div>
 					</form>

@@ -3,11 +3,21 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 
+<!-- meta tag -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>SE2020</title>
+
+
+<!-- CSS -->
 <link th:href="@{css/user_list.css}" rel="stylesheet" />
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
 
 </head>
 <body>
-	<div class="area"></div>
+	<!-- nav slide bar -->
 	<nav class="main-menu">
 		<ul>
 			<li class="has-subnav active"><a th:href="@{/user_list}"> <i
@@ -18,7 +28,7 @@
 					class="fa fa-home fa-2x"></i> <span class="nav-text">
 						Warehouse Management </span>
 			</a></li>
-			<li class="has-subnav"><a href="#"> <i
+			<li class="has-subnav"><a th:href="@{/product_list}"> <i
 					class="fa fa-list fa-2x"></i> <span class="nav-text">
 						Products Management </span>
 			</a></li>
@@ -32,11 +42,21 @@
 			</a></li>
 		</ul>
 	</nav>
-
-	<h2 style="text-align: center;">User Management</h2>
-	<div class="container" style="margin-left: 27%">
+	<!-- end of slide bar -->
+	<br>
+	<div class="container">
 		<div class="row">
-			<table class="table" border="1">
+			<div class="col-md-11">
+				<h2>User Management</h2>
+			</div>
+			<div class="col-md-1">
+				<a th:href="@{/create_user}" class="btn btn-primary btn-md">New</a>
+			</div>
+
+		</div>
+		<br>
+		<div class="row">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th scope="col">Name</th>

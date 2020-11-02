@@ -12,165 +12,141 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/user-profile.css" />
+<link rel="stylesheet" href="/css/user_list.css" />
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$(document).on('click', '.dob', function() {
-			$(this).datetimepicker({
-				language : 'fr',
-				endDate : '-16y',
-				weekStart : 1,
-				todayBtn : 1,
-				autoclose : 1,
-				startView : 2,
-				minView : 2,
-				forceParse : 0
-			}).focus();
-		});
-	});
-</script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-		<div class="container">
-			<a class="navbar-brand" href="#">SE 2020 CONTEST</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarResponsive" aria-controls="navbarResponsive"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						th:href="@{/user_list}">Home <span class="sr-only">(current)</span>
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Services</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Contact</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+	<!-- nav slide bar -->
+	<nav class="main-menu">
+		<ul>
+			<li class="has-subnav active"><a th:href="@{/user_list}"> <i
+					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
+						Management </span>
+			</a></li>
+			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
+					class="fa fa-home fa-2x"></i> <span class="nav-text">
+						Warehouse Management </span>
+			</a></li>
+			<li class="has-subnav"><a th:href="@{/product_list}"> <i
+					class="fa fa-list fa-2x"></i> <span class="nav-text">
+						Products Management </span>
+			</a></li>
+
+		</ul>
+
+		<ul class="logout">
+			<li><a th:href="@{/logout}" class="nav-link"> <i
+					class="fa fa-power-off fa-2x"></i> <span class="nav-text">
+						Logout </span>
+			</a></li>
+		</ul>
 	</nav>
-	<!-- menu bar -->
-	<div>
-		<div class="sidebar">
-			<a class="active" th:href="@{/user_list}">Users</a> <a href="#news"
-				th:href="@{/warehouse_list}">Warehouses</a> <a href="#contact"
-				th:href="@{/product_list}">Product</a> <a href="#about"
-				th:href="@{/welcome}">Profile</a>
-		</div>
-	</div>
-	<!-- end of menu -->
-	<div id="login">
-		<div class="container">
-			<div id="login-row"
-				class="row justify-content-center align-items-center">
-				<div id="login-column" class="col-md-6">
-					<div id="login-box" class="col-md-12">
-						<form th:action="@{/create_user}" th:object="${user}"
-							method="post">
-							<h3 class="text-left text-info" style="margin-left: 30%">Create
-								User</h3>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">User Name</label>
-								</div>
-								<div class="col-md-6">
-									<input type="text" th:field="*{name}" class="form-control"
-										id="id_name" required>
-								</div>
+	<!-- end of slide bar -->
+	<br>
+	<div class="container">
+		<div id="login-row"
+			class="row justify-content-center align-items-center">
+			<div id="login-column" class="col-md-6">
+				<div id="login-box" class="col-md-12">
+					<form th:action="@{/create_user}" th:object="${user}" method="post">
+						<h3 class="text-left text-info" style="margin-left: 30%">Create
+							User</h3>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">User Name</label>
 							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">User Email</label>
-								</div>
-								<div class="col-md-6">
-									<input type="email" th:field="*{email}" class="form-control"
-										id="id_email" required>
-								</div>
+							<div class="col-md-6">
+								<input type="text" th:field="*{name}" class="form-control"
+									id="id_name" required>
 							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">Password</label>
-								</div>
-								<div class="col-md-6">
-									<input type="password" th:field="*{password}"
-										class="form-control" id="id_password" required>
-								</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">User Email</label>
 							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">Date Of Birth</label>
-								</div>
-								<div class="col-md-6">
-									<input type="text" th:field="*{dob}" class="form-control dob"
-										data-date-format="dd/MM/yyyy" id="id_dob">
-								</div>
+							<div class="col-md-6">
+								<input type="email" th:field="*{email}" class="form-control"
+									id="id_email" required>
 							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">Phone No.</label>
-								</div>
-								<div class="col-md-6">
-									<input type="number" th:field="*{phone}" class="form-control"
-										id="id_phone" required>
-								</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">Password</label>
 							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">NRC.</label>
-								</div>
-								<div class="col-md-6">
-									<input type="text" th:field="*{nrc}" class="form-control"
-										id="id_nrc" required>
-								</div>
+							<div class="col-md-6">
+								<input type="password" th:field="*{password}"
+									class="form-control" id="id_password" required>
 							</div>
-							<br>
-							<div class="row">
-								<div class="col-md-6">
-									<label class="text-info">Address</label>
-								</div>
-								<div class="col-md-6">
-									<textarea th:field="*{address}" id="id_address"
-										class="md-textarea form-control"></textarea>
-								</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">Date Of Birth</label>
 							</div>
-							<br>
+							<div class="col-md-6">
+								<input type="text" th:field="*{dob}" class="form-control dob"
+									data-date-format="dd/MM/yyyy" id="id_dob">
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">Phone No.</label>
+							</div>
+							<div class="col-md-6">
+								<input type="number" th:field="*{phone}" class="form-control"
+									id="id_phone" required>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">NRC.</label>
+							</div>
+							<div class="col-md-6">
+								<input type="text" th:field="*{nrc}" class="form-control"
+									id="id_nrc" required>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="text-info">Address</label>
+							</div>
+							<div class="col-md-6">
+								<textarea th:field="*{address}" id="id_address"
+									class="md-textarea form-control"></textarea>
+							</div>
+						</div>
+						<br>
 						<div class="row">
 							<div class="col-md-6">
 								<label class="text-info">Account Type</label>
 							</div>
 							<div class="col-md-6">
-								<select name="accountType" class="browser-default custom-select" th:field="*{accountType}">
-									<option
-										th:each="accType : ${accountType}"
+								<select name="accountType" class="browser-default custom-select"
+									th:field="*{accountType}">
+									<option th:each="accType : ${accountType}"
 										th:value="${accType}" th:text="${accType}"></option>
 								</select>
 							</div>
 						</div>
-							<br>
-							<div class="row">
-								<div class="col-md-4"></div>
-								<div class="col-md-2">
-									<input type="submit" name="submit"
-										class="btn btn-primary btn-md" value="Save">
-								</div>
-								<div class="col-md-2">
-									<a th:href="@{/user_list}" class="btn btn-primary">Back</a>
-								</div>
+						<br>
+						<div class="row">
+							<div class="col-md-4"></div>
+							<div class="col-md-2">
+								<input type="submit" name="submit"
+									class="btn btn-primary btn-md" value="Save">
 							</div>
-						</form>
-					</div>
+							<div class="col-md-2">
+								<a th:href="@{/user_list}" class="btn btn-primary">Back</a>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

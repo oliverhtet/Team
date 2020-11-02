@@ -16,8 +16,9 @@
 	<!-- Navigation -->
 	<nav class="main-menu">
 		<ul>
-			<li class="has-subnav"><a th:href="@{/user_list}"> <i class="fa fa-user fa-2x"></i>
-					<span class="nav-text"> User Management </span>
+			<li class="has-subnav"><a th:href="@{/user_list}"> <i
+					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
+						Management </span>
 			</a></li>
 			<li class="has-subnav active"><a th:href="@{/warehouse_list}">
 					<i class="fa fa-home fa-2x"></i> <span class="nav-text">
@@ -37,44 +38,57 @@
 			</a></li>
 		</ul>
 	</nav>
+	<!-- end nav -->
+
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h3>Warehouse List</h3>
+			</div>
+			<div class="col-md-3"></div>
+			<div class="col-md-3"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-1">
+				<a th:href="@{/create_ware}" class="btn btn-primary btn-md">New</a>
+			</div>
+		</div>
+	</div>
 
 	<br>
 	<div class="container">
 		<div class="row">
 
-			<div class="card">
+			<!-- <div>
 
-				<div>
+				<a th:href="@{/create_ware}" class="btn btn-primary btn-md"
+					style="float: right;">New</a>
+			</div> -->
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Location</th>
+						<th scope="col">Create Date</th>
+						<th scope="col">Modified Date</th>
+						<th scope="col"></th>
+						<th scope="col"></th>
 
-					<a th:href="@{/create_ware}" class="btn btn-primary btn-md"
-						style="float: right;">New</a>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">Name</th>
-							<th scope="col">Location</th>
-							<th scope="col">Create Date</th>
-							<th scope="col">Modified Date</th>
-							<th scope="col"></th>
-							<th scope="col"></th>
-
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="ware:${warehouses}">
-							<td th:text="${ware.name}"></td>
-							<td th:text="${ware.location}"></td>
-							<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
-							<td th:text="${#dates.format(ware.modifiedDate,'dd/MM/yyyy')}"></td>
-							<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}"
-								class="btn btn-primary">Edit</a></td>
-							<td><a th:href="@{/delete_ware/{id}(id=${ware.id})}"
-								class="btn btn-danger">Delete</a></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ware:${warehouses}">
+						<td th:text="${ware.name}"></td>
+						<td th:text="${ware.location}"></td>
+						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
+						<td th:text="${#dates.format(ware.modifiedDate,'dd/MM/yyyy')}"></td>
+						<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}"
+							class="btn btn-primary">Edit</a></td>
+						<td><a th:href="@{/delete_ware/{id}(id=${ware.id})}"
+							class="btn btn-danger">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 

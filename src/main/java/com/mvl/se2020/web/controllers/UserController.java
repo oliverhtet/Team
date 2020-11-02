@@ -129,7 +129,6 @@ public class UserController {
 		user.setCreateDate(new Date());
 		user.setModifiedDate(new Date());
 
-		System.out.println(bind.toString());
 		model.addAttribute("user", user);
 
 		userRepository.save(user);
@@ -147,8 +146,6 @@ public class UserController {
 
 		User user = userRepository.findById(id).orElseThrow();
 
-		System.out.println("User Edit Form>>>>" + user.toString());
-
 		model.addAttribute("accountType", AccountType.values());
 		model.addAttribute("user", user);
 
@@ -157,16 +154,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
-	public String editPagePost(Model model, @ModelAttribute User user) {
+	public String editPagePost(Model model, @ModelAttribute User user, BindingResult bind) {
 
-		user.setDob(new Date());
 		user.setModifiedDate(new Date());
 		userRepository.save(user);
 
 		List<User> userList = userRepository.findAll();
 		model.addAttribute("users", userList);
 
-		return "redirect:/user_list";
+		return "user_list";
 	}
 
 	@RequestMapping("/delete_user/{id}")
