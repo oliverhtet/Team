@@ -6,19 +6,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	@Query(value = "Select * from user where user_email=?1 and user_password=?2", nativeQuery = true)
+	@Query(value = "Select * from user where user_email=?1 and user_password=?2 and status='ENABLE'", nativeQuery = true)
 	User checkUser(String email, String password);
 
 	@Query(value = "Select * from user where status=?1", nativeQuery = true)
-	List<User> findAllUserWithStatus(Status enable);
-
-	@Query(value = "Select * from user where status=?1", nativeQuery = true)
 	List<User> findAllUsers(String string);
+	
+	@Query(value = "Select * from user where role=?1 and status='ENABLE'", nativeQuery = true)
+	List<User> findUserWithRole(String status);
+	
+	@Query(value = "Select * from user where user_name like %:name% and status='ENABLE'", nativeQuery = true)
+	List<User> findUserWithName(String name);
 
 }
