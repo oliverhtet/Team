@@ -31,8 +31,7 @@
 	left: 0;
 	width: 60px;
 	position: fixed;
- 
-  overflow: hidden;
+  	overflow: hidden;
 
 	-webkit-transition: width .05s linear;
 	transition: width .05s linear;
