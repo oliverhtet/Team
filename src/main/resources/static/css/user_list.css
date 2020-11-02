@@ -25,13 +25,14 @@
 .main-menu {
 	background: #0C438C;
 	border-right: 1px solid #e5e5e5;
-	position: absolute;
 	top: 0;
 	bottom: 0;
 	height: 100%;
 	left: 0;
 	width: 60px;
-	overflow: hidden;
+	position: fixed;
+  	overflow: hidden;
+
 	-webkit-transition: width .05s linear;
 	transition: width .05s linear;
 	-webkit-transform: translateZ(0) scale(1, 1);
@@ -98,7 +99,9 @@
 a:hover, a:focus {
 	text-decoration: none;
 }
-
+body{
+	overflow: auto;
+}
 nav {
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -120,6 +123,7 @@ nav ul, nav li {
 	color: #fff;
 	background-color: #5fa2db;
 }
+
 
 .area {
 	float: left;
