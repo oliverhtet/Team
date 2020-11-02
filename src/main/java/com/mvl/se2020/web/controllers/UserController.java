@@ -31,7 +31,7 @@ public class UserController {
 	@Autowired
 	public UserRepository userRepository;
 	public WarehouseRepositroy wareRepo;
-	
+
 	public AccountType accountType;
 
 	// test commit zmh
@@ -115,7 +115,7 @@ public class UserController {
 	public String userRegister(Model model) {
 		User user = new User();
 
-		model.addAttribute("accountType", accountType);
+		model.addAttribute("accountType", AccountType.values());
 		model.addAttribute("user", user);
 
 		return "user_register";
@@ -129,7 +129,6 @@ public class UserController {
 		user.setCreateDate(new Date());
 		user.setModifiedDate(new Date());
 
-		
 		System.out.println(bind.toString());
 		model.addAttribute("user", user);
 
@@ -150,7 +149,7 @@ public class UserController {
 
 		System.out.println("User Edit Form>>>>" + user.toString());
 
-		model.addAttribute("accountType", accountType);
+		model.addAttribute("accountType", AccountType.values());
 		model.addAttribute("user", user);
 
 		return "edit_user";

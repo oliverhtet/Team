@@ -22,18 +22,24 @@ import com.mvl.se2020.web.repository.WarehouseRepositroy;
 public class ProductController {
 	@Autowired
 	private ProductRepository productRepo;
+
 	@Autowired
 	private WarehouseRepositroy wareRepo;
-
-	public Catagory category;
 
 	@RequestMapping("/product_list")
 	public String productList(Model model) {
 
+		Product p = new Product();
 		System.out.println("Product List Method");
+
 		List<Product> productList = productRepo.findAll();
 
+		model.addAttribute("product", p);
 		model.addAttribute("productList", productList);
+
+		List<Warehouse> wlist = wareRepo.findAll();
+		model.addAttribute("wlist", wlist);
+		model.addAttribute("categorylist", Catagory.values());
 
 		return "product_list";
 	}
@@ -65,6 +71,9 @@ public class ProductController {
 		product.setModifiedDate(new Date());
 		product.setStatus(Status.ENABLE);
 
+		String wname = wareRepo.findById(product.getWareId()).orElseThrow().getName();
+		product.setWareName(wname);
+
 		productRepo.save(product);
 
 		List<Product> productList = productRepo.findAll();
@@ -92,13 +101,34 @@ public class ProductController {
 	@RequestMapping(value = "/edit_product", method = RequestMethod.POST)
 	public String productUpdatePost(Model model, @ModelAttribute Product p) {
 
-		Product productUpdate = productRepo.findById(p.getId()).orElseThrow();
-		productUpdate.setModifiedDate(new Date());
-		System.out.println(productUpdate.toString() + " >>>>");
-		productRepo.save(productUpdate);
+		p.setWareName(wareRepo.findById(p.getWareId()).orElseThrow().getName());
+
+		productRepo.save(p);
+
 		List<Product> pList = productRepo.findAll();
 		model.addAttribute("productList", pList);
 
+		return "product_list";
+	}
+
+	@RequestMapping(value = "/filter_product", method = RequestMethod.POST)
+	public String productSearch(Model model, @ModelAttribute Product p) {
+		List<Product> plist = null;
+		System.out.println(p.toString());
+		if (p != null) {
+			if (p.getName() != null) {
+				plist = productRepo.findByName(p.getName());
+				model.addAttribute("productList", plist);
+
+			} else {
+				plist = productRepo.findAll();
+				model.addAttribute("productList", plist);
+			}
+		}
+		List<Warehouse> wlist = wareRepo.findAll();
+
+		model.addAttribute("wlist", wlist);
+		model.addAttribute("categorylist", Catagory.values());
 		return "product_list";
 	}
 }

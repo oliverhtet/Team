@@ -39,6 +39,17 @@ public class Product {
 	@Column(name = "warehouse_id")
 	private Long wareId;
 
+	@Column(name = "warehouse_name")
+	private String wareName;
+
+	public String getWareName() {
+		return wareName;
+	}
+
+	public void setWareName(String wareName) {
+		this.wareName = wareName;
+	}
+
 	@Column(name = "product_catagory")
 	@Enumerated(EnumType.STRING)
 	private Catagory catagory;
