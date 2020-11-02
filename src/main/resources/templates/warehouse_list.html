@@ -42,17 +42,26 @@
 
 	<br>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-3">
-				<h3>Warehouse List</h3>
+		<form th:action="@{/search_warehouse}" th:object="${warehouse}"
+					method="post">
+			<div class="row">
+				<div class="col-md-3">
+					<h3>Warehouse List</h3>
+				</div>
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
+					<input type="text" th:field="*{name}" id="id_name"
+						class="form-control" />
+				</div>
+				<div class="col-md-2">
+					<input type="submit" name="submit" class="btn btn-primary btn-md"
+						value="Search">
+				</div>
+				<div class="col-md-1">
+					<a th:href="@{/create_ware}" class="btn btn-primary btn-md">New</a>
+				</div>
 			</div>
-			<div class="col-md-3"></div>
-			<div class="col-md-3"></div>
-			<div class="col-md-2"></div>
-			<div class="col-md-1">
-				<a th:href="@{/create_ware}" class="btn btn-primary btn-md">New</a>
-			</div>
-		</div>
+		</form>
 	</div>
 
 	<br>

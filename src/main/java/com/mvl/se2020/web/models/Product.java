@@ -16,7 +16,7 @@ import com.mvl.se2020.web.enumerations.Catagory;
 import com.mvl.se2020.web.enumerations.Status;
 
 /**
- * @author MyoGlobal Developer1
+ * @author zmh
  *
  */
 @Entity

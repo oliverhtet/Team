@@ -34,9 +34,6 @@ public class UserController {
 
 	public AccountType accountType;
 
-	// test commit zmh
-	// SampleDateFormat formatter = new SampleDateFormat("dd-MM-yyyy");
-
 	@RequestMapping("/index")
 	public ModelAndView userLogin(Model model) {
 		User user = new User();
@@ -68,13 +65,9 @@ public class UserController {
 
 	@RequestMapping("/user_list")
 	public String userList(Model model, HttpSession session) {
-		List<User> userList = userRepository.findAll();
 
-		/*
-		 * User u = (User) session.getAttribute("user");
-		 * System.out.println(">>>>>>>>>>>>>>" + u.getName());
-		 */
-		System.out.println("User List Method");
+		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+
 		model.addAttribute("users", userList);
 
 		return "user_list";
@@ -133,7 +126,7 @@ public class UserController {
 
 		userRepository.save(user);
 
-		List<User> userList = userRepository.findAll();
+		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", userList);
 
@@ -156,23 +149,30 @@ public class UserController {
 	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
 	public String editPagePost(Model model, @ModelAttribute User user, BindingResult bind) {
 
+		User db_user = userRepository.findById(user.getId()).orElseThrow();
+		user.setStatus(db_user.getStatus());
+		user.setCreateDate(db_user.getCreateDate());
 		user.setModifiedDate(new Date());
+
 		userRepository.save(user);
 
-		List<User> userList = userRepository.findAll();
+		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 		model.addAttribute("users", userList);
 
-		return "user_list";
+		return "redirect:/user_list";
 	}
 
 	@RequestMapping("/delete_user/{id}")
 	public String userDelete(Model model, @PathVariable Long id) {
 
 		User user = userRepository.findById(id).orElseThrow();
+		user.setStatus(Status.DISABEL);
+		userRepository.save(user);
 
-		model.addAttribute("user", user);
+		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+		model.addAttribute("users", userList);
 
-		return "edit_user";
+		return "redirect:/user_list";
 
 	}
 

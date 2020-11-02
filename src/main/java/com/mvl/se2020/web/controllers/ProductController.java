@@ -28,18 +28,17 @@ public class ProductController {
 
 	@RequestMapping("/product_list")
 	public String productList(Model model) {
-
-		Product p = new Product();
 		System.out.println("Product List Method");
 
-		List<Product> productList = productRepo.findAll();
+		Product p = new Product();// for filter
+		model.addAttribute("product", p);// for filter
 
-		model.addAttribute("product", p);
-		model.addAttribute("productList", productList);
-
-		List<Warehouse> wlist = wareRepo.findAll();
+		List<Warehouse> wlist = wareRepo.findAllEnable(Status.ENABLE.toString());
 		model.addAttribute("wlist", wlist);
 		model.addAttribute("categorylist", Catagory.values());
+
+		List<Product> productList = productRepo.findAllProduct(Status.ENABLE.toString());
+		model.addAttribute("productList", productList);
 
 		return "product_list";
 	}
@@ -51,7 +50,7 @@ public class ProductController {
 
 		Product p = new Product();
 
-		List<Warehouse> ware = wareRepo.findAll();
+		List<Warehouse> ware = wareRepo.findAllEnable(Status.ENABLE.toString());
 		// System.out.println(ware.get(0).toString());
 
 		model.addAttribute("warehouseList", ware);
@@ -76,7 +75,7 @@ public class ProductController {
 
 		productRepo.save(product);
 
-		List<Product> productList = productRepo.findAll();
+		List<Product> productList = productRepo.findAllProduct(Status.ENABLE.toString());
 
 		model.addAttribute("productList", productList);
 
@@ -86,12 +85,12 @@ public class ProductController {
 	@RequestMapping("/edit_product/{id}")
 	public String productUpdate(Model model, @PathVariable Long id) {
 
-		System.out.println("Product Update Method");
-
-		model.addAttribute("product", productRepo.findById(id));
+		Product p = productRepo.findById(id).orElseThrow();
+		System.out.println("Product Update Method" + p.toString() + " <<<<<<<<<<<<<<<");
+		model.addAttribute("product", p);
 		model.addAttribute("categoryList", Catagory.values());
 
-		List<Warehouse> wList = wareRepo.findAll();
+		List<Warehouse> wList = wareRepo.findAllEnable(Status.ENABLE.toString());
 
 		model.addAttribute("warehouseList", wList);
 
@@ -101,34 +100,57 @@ public class ProductController {
 	@RequestMapping(value = "/edit_product", method = RequestMethod.POST)
 	public String productUpdatePost(Model model, @ModelAttribute Product p) {
 
+		Product productUpdate = productRepo.findById(p.getId()).orElseThrow();
+		System.out.println(productUpdate.toString() + " <<<<<<<<<<<<");
+		p.setCreateDate(productUpdate.getCreateDate());
+		p.setStatus(productUpdate.getStatus());
+		p.setModifiedDate(new Date());
+
 		p.setWareName(wareRepo.findById(p.getWareId()).orElseThrow().getName());
 
 		productRepo.save(p);
 
-		List<Product> pList = productRepo.findAll();
+		List<Product> pList = productRepo.findAllProduct(Status.ENABLE.toString());
 		model.addAttribute("productList", pList);
 
-		return "product_list";
+		return "redirect:/product_list";
 	}
 
 	@RequestMapping(value = "/filter_product", method = RequestMethod.POST)
 	public String productSearch(Model model, @ModelAttribute Product p) {
 		List<Product> plist = null;
-		System.out.println(p.toString());
 		if (p != null) {
-			if (p.getName() != null) {
-				plist = productRepo.findByName(p.getName());
-				model.addAttribute("productList", plist);
-
-			} else {
-				plist = productRepo.findAll();
-				model.addAttribute("productList", plist);
-			}
+			/*
+			 * if(p.getName()!=null && p.getWareId()!=null && p.getCatagory()!=null) {
+			 * if(p.getName()!=null & p.getWareId()!=null && p.getCatagory()==null) {
+			 * if(p.getName()!=null & p.getWareId()==null && p.getCatagory()!=null) {
+			 * if(p.getName()!=null & p.getWareId()==null && p.getCatagory()==null) {
+			 * if(p.getName()==null & p.getWareId()!=null && p.getCatagory()!=null) {
+			 * if(p.getName()==null & p.getWareId()==null && p.getCatagory()!=null) {
+			 * if(p.getName()==null & p.getWareId()!=null && p.getCatagory()==null) { plist
+			 * = productRepo.findByWareId(p.getWareId()); }
+			 * 
+			 * plist = productRepo.findByCategory(p.getCatagory().toString()); }
+			 * 
+			 * plist = productRepo.findByName(p.getName().toLowerCase()); } plist =
+			 * productRepo.findByWareAndCategory(p.getWareId(),p.getCatagory().toString());
+			 * }
+			 * 
+			 * } } plist =
+			 * productRepo.findByAll(p.getName().toLowerCase(),p.getWareId(),p.getCatagory()
+			 * .toString()); }
+			 */
+		} else {
+			plist = productRepo.findAll();
 		}
-		List<Warehouse> wlist = wareRepo.findAll();
 
+		model.addAttribute("productList", plist);
+
+		List<Warehouse> wlist = wareRepo.findAllEnable(Status.ENABLE.toString());
 		model.addAttribute("wlist", wlist);
+
 		model.addAttribute("categorylist", Catagory.values());
+
 		return "product_list";
 	}
 }

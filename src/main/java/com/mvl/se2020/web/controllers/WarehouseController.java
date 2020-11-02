@@ -27,18 +27,27 @@ public class WarehouseController {
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
 
-		/*
-		 * if (session.getAttribute("user") == null) {
-		 * System.out.println("User Session is null"); } else {
-		 * session.setAttribute("user", session); System.out.println("User Session is "
-		 * + session.getAttribute("user")); }
-		 */
-		List<Warehouse> wareList = wareRepo.findAll();
-
-		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse List Method");
 
-		return null;
+		List<Warehouse> wareList = wareRepo.findAllEnable(Status.ENABLE.toString());
+
+		model.addAttribute("warehouses", wareList);
+
+		// for search
+		model.addAttribute("warehouse", new Warehouse());
+
+		return "warehouse_list";
+
+	}
+
+	@RequestMapping(value = "/search_warehouse", method = RequestMethod.POST)
+	public String warehuseInquery(Model model, HttpSession session, @ModelAttribute Warehouse w) {
+
+		List<Warehouse> wareList = wareRepo.findByName(w.getName().toLowerCase());
+
+		model.addAttribute("warehouses", wareList);
+
+		return "warehouse_list";
 
 	}
 
@@ -67,11 +76,11 @@ public class WarehouseController {
 
 		wareRepo.save(warehouse);
 
-		List<Warehouse> wareList = wareRepo.findAll();
+		List<Warehouse> wareList = wareRepo.findAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
 
-		return "warehouse_list";
+		return "redirect:/warehouse_list";
 
 	}
 
@@ -89,17 +98,33 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/edit_ware", method = RequestMethod.POST)
 	public String wareEditPost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
-		Warehouse w = warehouse;
-		w.setModifiedDate(new Date());
+		Warehouse db_ware = wareRepo.findById(warehouse.getId()).orElseThrow();
 
-		wareRepo.save(w);
+		warehouse.setCreateDate(db_ware.getCreateDate());
+		warehouse.setStatus(db_ware.getStatus());
+		warehouse.setModifiedDate(new Date());
 
-		List<Warehouse> wareList = wareRepo.findAll();
+		wareRepo.save(warehouse);
+
+		List<Warehouse> wareList = wareRepo.findAllEnable(Status.ENABLE.toString());
 
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
 
 		return "warehouse_list";
+
+	}
+
+	@RequestMapping("/delete_ware/{id}")
+	public String wareDisable(Model model, @PathVariable Long id) {
+
+		Warehouse ware = wareRepo.findById(id).orElseThrow();
+
+		ware.setModifiedDate(new Date());
+		ware.setStatus(Status.DISABEL);
+		wareRepo.save(ware);
+
+		return "redirect:/warehouse_list";
 
 	}
 
