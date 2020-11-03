@@ -41,29 +41,24 @@ public class WarehouseController {
 
 	}
 
-	//zmh
+	// zmh
 	@RequestMapping(value = "/search_warehouse", method = RequestMethod.POST)
 	public String warehuseInquery(Model model, HttpSession session, @ModelAttribute Warehouse w) {
 
 		List<Warehouse> wlist = null;
 		System.out.println();
 		if (w != null) {
-			if (w.getName() != null && !w.getName().isEmpty() && w.getLocation() == null) {
-
+			if (!w.getName().isEmpty() && w.getLocation() == null) {
 				wlist = warehouseRepositroy.getByName(w.getName());
-			} else if (w.getLocation() != null && w.getName().isEmpty() && w.getName() == null) {
-
+			} else if (w.getLocation() != null && w.getName().isEmpty()) {
 				wlist = warehouseRepositroy.getByLocation(w.getLocation().toString());
-			} else if (w.getName() != null && !w.getName().isEmpty() && w.getLocation() != null) {
-
+			} else if (!w.getName().isEmpty() && w.getLocation() != null) {
 				wlist = warehouseRepositroy.getByNameAndLocation(w.getLocation().toString(), w.getName());
 			} else {
-
 				wlist = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 			}
 
 		} else {
-
 			wlist = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 		}
 
