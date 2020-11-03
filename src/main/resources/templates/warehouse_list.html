@@ -45,23 +45,38 @@
 	<br>
 	<div class="container">
 		<form th:action="@{/search_warehouse}" th:object="${warehouse}"
-					method="post">
+			method="post">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<h3>Warehouse List</h3>
 				</div>
-				<div class="col-md-3"></div>
-				<div class="col-md-3">
-					<input type="text" th:field="*{name}" id="id_name"
-						class="form-control" />
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-3"></div>
+						<div class="col-md-3">
+							<input type="text" th:field="*{name}" id="id_name"
+								class="form-control" placeholder="Warehouse Name" />
+						</div>
+						<div class="col-md-3">
+							<select name="location" class="browser-default custom-select"
+								th:field="*{location}">
+								<option value="">Choose Location</option>
+								<option th:each="location : ${searchlocation}"
+									th:value="${location}" th:text="${location}">Choose
+									Location</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<input type="submit" name="submit" class="btn btn-info btn-md"
+								value="Search">
+						</div>
+						<div class="col-md-1">
+							<a th:href="@{/create_ware}" class="btn btn-primary btn-md">New</a>
+						</div>
+					</div>
+
 				</div>
-				<div class="col-md-2">
-					<input type="submit" name="submit" class="btn btn-primary btn-md"
-						value="Search">
-				</div>
-				<div class="col-md-1">
-					<a th:href="@{/create_ware}" class="btn btn-primary btn-md">New</a>
-				</div>
+
 			</div>
 		</form>
 	</div>
@@ -94,12 +109,6 @@
 	</div>
 	<div class="container">
 		<div class="row">
-
-			<!-- <div>
-
-				<a th:href="@{/create_ware}" class="btn btn-primary btn-md"
-					style="float: right;">New</a>
-			</div> -->
 			<table class="table table-hover">
 				<thead>
 					<tr>

@@ -12,26 +12,31 @@
 <!-- CSS -->
 <link th:href="@{css/login.css}" rel="stylesheet" />
 <!-- JS -->
-
+<script>
+	$('.login-form').on('submit', function() {
+		$('[name="text"]').val($('[name="email-entry"]').val());
+		$('[name="email-entry"]').val('');
+		$('[name="password"]').val($('[name="password-entry"]').val());
+		$('[name="password-entry"]').val('');
+	});
+</script>
 </head>
 <body>
 
 
 	<div class="login-box">
-		<img th:src="@{/img/avatar.png}" class="avatar"/>
+		<img th:src="@{/img/avatar.png}" class="avatar" />
 		<h1>Login Here</h1>
 
 		<form th:action="@{/index}" th:object="${user}" method="post">
-		<p>Email</p>
-			   <input type="text" th:field="*{email}" id="id_email" required
+			<p>Email</p>
+			<input type="text" th:field="*{email}" name="email-entry" required
 				placeholder="Enter Email">
-				
-				<p>Password</p>
-				 <input type="password" th:field="*{password}" id="id_password" required
-				placeholder="Enter Password"> 
-				
-				<input type="submit"
-				name="submit" value="Submit">
+
+			<p>Password</p>
+			<input type="password" th:field="*{password}" id="id_password"
+				name="password-entry" required placeholder="Enter Password">
+			<input type="submit" name="submit" value="Submit">
 
 		</form>
 

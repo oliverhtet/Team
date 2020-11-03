@@ -26,8 +26,34 @@
 
 	<!-- Navigation -->
 	<nav class="main-menu">
+		<!-- <ul th:if="${usreRole}=='ADMIN'">
+			<li class="has-subnav active"><a th:href="@{/user_list}"> <i
+					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
+						Management </span>
+			</a></li>
+			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
+					class="fa fa-home fa-2x"></i> <span class="nav-text">
+						Warehouse Management </span>
+			</a></li>
+			<li class="has-subnav"><a th:href="@{/product_list}"> <i
+					class="fa fa-list fa-2x"></i> <span class="nav-text">
+						Products Management </span>
+			</a></li>
+
+		</ul>
+		<ul th:if="${usreRole}!='ADMIN'">
+			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
+					class="fa fa-home fa-2x"></i> <span class="nav-text">
+						Warehouse Management </span>
+			</a></li>
+			<li class="has-subnav active"><a th:href="@{/product_list}"> <i
+					class="fa fa-list fa-2x"></i> <span class="nav-text">
+						Products Management </span>
+			</a></li>
+
+		</ul> -->
 		<ul>
-			<li class="has-subnav "><a th:href="@{/user_list}"> <i
+			<li class="has-subnav"><a th:href="@{/user_list}"> <i
 					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
 						Management </span>
 			</a></li>
@@ -41,7 +67,6 @@
 			</a></li>
 
 		</ul>
-
 		<ul class="logout">
 			<li><a th:href="@{/logout}" class="nav-link"> <i
 					class="fa fa-power-off fa-2x"></i> <span class="nav-text">
@@ -59,18 +84,18 @@
 			<div class="col-md-4">
 				<h3>Product List</h3>
 			</div>
-			<div class="col-md-2"></div>
-			<div class="col-md-5">
+			<div class="col-md-8">
 				<form th:action="@{/filter_product}" th:object="${product}"
 					method="post">
 					<div class="row">
 						<div class="col-md-3">
 							<input type="text" th:field="*{name}" id="id_name"
-								class="form-control" />
+								placeholder="Product Name" class="form-control" />
 						</div>
 						<div class="col-md-3">
 							<select name="wareId" class="browser-default custom-select"
 								th:field="*{wareId}">
+								<option value="">Choose Warehouse</option>
 								<option th:each="ware : ${wlist}" th:value="${ware.id}"
 									th:text="${ware.name}"></option>
 							</select>
@@ -78,21 +103,21 @@
 						<div class="col-md-3">
 							<select name="category" class="browser-default custom-select"
 								th:field="*{catagory}">
+								<option value="">Choose Category</option>
 								<option th:each="category : ${categorylist}"
 									th:value="${category}" th:text="${category}"></option>
 							</select>
 						</div>
-						<div class="col-md-3">
-							<input type="submit" name="submit" class="btn btn-primary btn-md"
+						<div class="col-md-1">
+							<input type="submit" name="submit" class="btn btn-info btn-md"
 								value="Search">
 						</div>
-
-
+						<div class="col-md-1"></div>
+						<div class="col-md-1">
+							<a th:href="@{/create_product}" class="btn btn-primary btn-md">New</a>
+						</div>
 					</div>
 				</form>
-			</div>
-			<div class="col-md-1">
-				<a th:href="@{/create_product}" class="btn btn-primary btn-md">New</a>
 			</div>
 		</div>
 	</div>

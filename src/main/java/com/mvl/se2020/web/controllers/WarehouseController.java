@@ -22,16 +22,17 @@ import com.mvl.se2020.web.repository.WarehouseRepositroy;
 public class WarehouseController {
 
 	@Autowired
-	private WarehouseRepositroy wareRepo;
+	private WarehouseRepositroy warehouseRepositroy;
 
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
 
 		System.out.println("Warehouse List Method");
 
-		List<Warehouse> wareList = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 
 		model.addAttribute("warehouses", wareList);
+		model.addAttribute("searchlocation", Location.values());
 
 		// for search
 		model.addAttribute("warehouse", new Warehouse());
@@ -43,10 +44,24 @@ public class WarehouseController {
 	@RequestMapping(value = "/search_warehouse", method = RequestMethod.POST)
 	public String warehuseInquery(Model model, HttpSession session, @ModelAttribute Warehouse w) {
 
-		List<Warehouse> wareList = wareRepo.findByName(w.getName().toLowerCase());
+		List<Warehouse> wlist = null;
 
-		model.addAttribute("warehouses", wareList);
+		if (w != null) {
+			if (w.getName() != null && w.getLocation() == null) {
+				wlist = warehouseRepositroy.getByName(w.getName());
+			} else if (w.getName() == null && w.getLocation() != null) {
+				wlist = warehouseRepositroy.getByLocation(w.getLocation().toString());
+			} /*
+				 * else if (w.getName() != null && w.getLocation() != null) { wlist =
+				 * warehouseRepositroy.getByNameAndLocation(w.getLocation(), w.getName()); }
+				 */
 
+		} else {
+			wlist = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
+		}
+
+		model.addAttribute("searchlocation", Location.values());
+		model.addAttribute("warehouses", wlist);
 		return "warehouse_list";
 
 	}
@@ -74,9 +89,9 @@ public class WarehouseController {
 		 * warehouse.setCreateUserId(u.getId()); warehouse.setModifiedUserId(u.getId());
 		 */
 
-		wareRepo.save(warehouse);
+		warehouseRepositroy.save(warehouse);
 
-		List<Warehouse> wareList = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
 
@@ -87,7 +102,7 @@ public class WarehouseController {
 	@RequestMapping("/edit_ware/{id}")
 	public String wareEdit(Model model, @PathVariable Long id) {
 
-		Warehouse ware = wareRepo.findById(id).orElseThrow();
+		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
 		model.addAttribute("warehouse", ware);
 		model.addAttribute("locationList", Location.values());
 		System.out.println("Warehouse Edit Method");
@@ -98,15 +113,15 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/edit_ware", method = RequestMethod.POST)
 	public String wareEditPost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
-		Warehouse db_ware = wareRepo.findById(warehouse.getId()).orElseThrow();
+		Warehouse db_ware = warehouseRepositroy.findById(warehouse.getId()).orElseThrow();
 
 		warehouse.setCreateDate(db_ware.getCreateDate());
 		warehouse.setStatus(db_ware.getStatus());
 		warehouse.setModifiedDate(new Date());
 
-		wareRepo.save(warehouse);
+		warehouseRepositroy.save(warehouse);
 
-		List<Warehouse> wareList = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
@@ -118,11 +133,11 @@ public class WarehouseController {
 	@RequestMapping("/delete_ware/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
 
-		Warehouse ware = wareRepo.findById(id).orElseThrow();
+		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
 
 		ware.setModifiedDate(new Date());
 		ware.setStatus(Status.DISABEL);
-		wareRepo.save(ware);
+		warehouseRepositroy.save(ware);
 
 		return "redirect:/warehouse_list";
 

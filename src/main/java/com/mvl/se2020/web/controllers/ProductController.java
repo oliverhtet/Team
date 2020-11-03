@@ -17,6 +17,7 @@ import com.mvl.se2020.web.models.Product;
 import com.mvl.se2020.web.models.Warehouse;
 import com.mvl.se2020.web.repository.ProductRepository;
 import com.mvl.se2020.web.repository.WarehouseRepositroy;
+import com.mvl.se2020.web.service.Service;
 
 @Controller
 public class ProductController {
@@ -26,6 +27,8 @@ public class ProductController {
 	@Autowired
 	private WarehouseRepositroy wareRepo;
 
+	Service service = new Service();
+
 	@RequestMapping("/product_list")
 	public String productList(Model model) {
 		System.out.println("Product List Method");
@@ -33,7 +36,7 @@ public class ProductController {
 		Product p = new Product();// for filter
 		model.addAttribute("product", p);// for filter
 
-		List<Warehouse> wlist = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> wlist = wareRepo.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("wlist", wlist);
 		model.addAttribute("categorylist", Catagory.values());
 
@@ -48,7 +51,7 @@ public class ProductController {
 
 		System.out.println("Product Create Method");
 
-		List<Warehouse> ware = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> ware = wareRepo.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouseList", ware);
 
 		model.addAttribute("categoryList", Catagory.values());
@@ -65,7 +68,7 @@ public class ProductController {
 		try {
 			List<Product> plist = productRepo.findAllProduct(Status.ENABLE.toString());
 
-			isExist = isProductExist(plist, product.getName());
+			isExist = service.isProductExist(plist, product.getName());
 			if (!isExist) {
 				product.setCreateDate(new Date());
 				product.setModifiedDate(new Date());
@@ -80,7 +83,7 @@ public class ProductController {
 
 				model.addAttribute("categoryList", Catagory.values());
 
-				List<Warehouse> ware = wareRepo.findAllEnable(Status.ENABLE.toString());
+				List<Warehouse> ware = wareRepo.getAllEnable(Status.ENABLE.toString());
 				model.addAttribute("warehouseList", ware);
 
 				return "create_product";
@@ -102,7 +105,7 @@ public class ProductController {
 		model.addAttribute("product", p);
 		model.addAttribute("categoryList", Catagory.values());
 
-		List<Warehouse> wList = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> wList = wareRepo.getAllEnable(Status.ENABLE.toString());
 
 		model.addAttribute("warehouseList", wList);
 
@@ -140,7 +143,7 @@ public class ProductController {
 
 		model.addAttribute("productList", plist);
 
-		List<Warehouse> wlist = wareRepo.findAllEnable(Status.ENABLE.toString());
+		List<Warehouse> wlist = wareRepo.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("wlist", wlist);
 
 		model.addAttribute("categorylist", Catagory.values());
@@ -158,21 +161,5 @@ public class ProductController {
 		productRepo.save(product);
 
 		return "redirect:/product_list";
-
-	}
-
-	public static Boolean isProductExist(List<Product> plist, String name) {
-
-		Boolean isExist = false;
-		String n = name.replaceAll("\\s", "").toLowerCase();
-
-		for (Product p : plist) {
-			if (n.equals(p.getName().toLowerCase().replaceAll("\\s", ""))) {
-				isExist = true;
-				break;
-			}
-		}
-		System.out.println(">>>>>>>>>>>>>> " + isExist);
-		return isExist;
 	}
 }

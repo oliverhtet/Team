@@ -24,9 +24,12 @@ import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.User;
 import com.mvl.se2020.web.repository.UserRepository;
 import com.mvl.se2020.web.repository.WarehouseRepositroy;
+import com.mvl.se2020.web.service.Service;
 
 @Controller
 public class UserController {
+
+	Service service = new Service();
 
 	@Autowired
 	public UserRepository userRepository;
@@ -49,15 +52,20 @@ public class UserController {
 
 		if (service_user == null) {
 			System.out.println("There is no user match with this email.");
+			model.addAttribute("error");
 			return "index";
 		} else {
-			if (service_user.getAccountType() == AccountType.ADMIN) {
 
-				session.setAttribute("user", service_user);
+			String userRole = service_user.getAccountType().toString();
+
+			if (service_user.getAccountType() == AccountType.ADMIN) {
+				model.addAttribute("userRole", userRole);
 				return "redirect:/user_list";
+
 			} else {
-				System.out.println("Other Account Type");
-				return "index";
+				model.addAttribute("userRole", userRole);
+				return "redirect:/product_list";
+
 			}
 
 		}
@@ -69,6 +77,8 @@ public class UserController {
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", userList);
+		model.addAttribute("user", new User());
+		model.addAttribute("accountType", AccountType.values());
 
 		return "user_list";
 	}

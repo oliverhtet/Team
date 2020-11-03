@@ -36,7 +36,6 @@
 			</a></li>
 
 		</ul>
-
 		<ul class="logout">
 			<li><a th:href="@{/logout}" class="nav-link"> <i
 					class="fa fa-power-off fa-2x"></i> <span class="nav-text">
@@ -47,41 +46,67 @@
 	<!-- end of slide bar -->
 	<br>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-11">
-				<h2>User Management</h2>
-			</div>
-			<div class="col-md-1">
-				<a th:href="@{/create_user}" class="btn btn-primary btn-md">New</a>
-			</div>
+		<form th:action="@{/search_user}" th:object="${user}" method="post">
+			<div class="row">
+				<div class="col-md-4">
+					<h3>User List</h3>
+				</div>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-3"></div>
+						<div class="col-md-3">
+							<input type="text" th:field="*{name}" id="id_name"
+								class="form-control" placeholder="User Name" />
+						</div>
+						<div class="col-md-3">
+							<select name="accountType" class="browser-default custom-select"
+								th:field="*{accountType}">
+								<option value="">Choose Role</option>
+								<option th:each="role : ${accountType}" th:value="${role}"
+									th:text="${role}">Choose Location</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<input type="submit" name="submit" class="btn btn-info btn-md"
+								value="Search">
+						</div>
+						<div class="col-md-1">
+							<a th:href="@{/create_user}" class="btn btn-primary btn-md">New</a>
+						</div>
+					</div>
 
-		</div>
-		<br>
+				</div>
+
+			</div>
+		</form>
+	</div>
+	<br>
+	<div class="container">
 		<div class="modal fade" id="removeModalCenter" tabindex="-1"
-		role="dialog" aria-labelledby="removeModalCenterTitle"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="removeModalCenterTitle">Alert
-						message</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p class="alert alert-danger">Are You sure You want to delete
-						this User?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-					<a href="" class="btn btn-danger" id="delRef">Delete</a>
+			role="dialog" aria-labelledby="removeModalCenterTitle"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="removeModalCenterTitle">Alert
+							message</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p class="alert alert-danger">Are You sure You want to delete
+							this User?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<a href="" class="btn btn-danger" id="delRef">Delete</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 		<div class="row">
 			<table class="table table-hover">
 				<thead>
