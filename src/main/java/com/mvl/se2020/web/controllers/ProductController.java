@@ -48,15 +48,11 @@ public class ProductController {
 
 		System.out.println("Product Create Method");
 
-		Product p = new Product();
-
 		List<Warehouse> ware = wareRepo.findAllEnable(Status.ENABLE.toString());
-		// System.out.println(ware.get(0).toString());
-
 		model.addAttribute("warehouseList", ware);
 
 		model.addAttribute("categoryList", Catagory.values());
-		model.addAttribute("product", p);
+		model.addAttribute("product", new Product());
 
 		return "create_product";
 	}
@@ -65,21 +61,37 @@ public class ProductController {
 	public String productCreatePost(Model model, @ModelAttribute Product product) {
 
 		System.out.println("Product Create Method Post");
+		Boolean isExist = false;
+		try {
+			List<Product> plist = productRepo.findAllProduct(Status.ENABLE.toString());
 
-		product.setCreateDate(new Date());
-		product.setModifiedDate(new Date());
-		product.setStatus(Status.ENABLE);
+			isExist = isProductExist(plist, product.getName());
+			if (!isExist) {
+				product.setCreateDate(new Date());
+				product.setModifiedDate(new Date());
+				product.setStatus(Status.ENABLE);
 
-		String wname = wareRepo.findById(product.getWareId()).orElseThrow().getName();
-		product.setWareName(wname);
+				String wname = wareRepo.findById(product.getWareId()).orElseThrow().getName();
+				product.setWareName(wname);
+				productRepo.save(product);
 
-		productRepo.save(product);
+			} else {
+				model.addAttribute("errorMsg", isExist);
 
-		List<Product> productList = productRepo.findAllProduct(Status.ENABLE.toString());
+				model.addAttribute("categoryList", Catagory.values());
 
-		model.addAttribute("productList", productList);
+				List<Warehouse> ware = wareRepo.findAllEnable(Status.ENABLE.toString());
+				model.addAttribute("warehouseList", ware);
 
-		return "redirect:/product_list";
+				return "create_product";
+			}
+			return "redirect:/product_list";
+
+		} catch (Exception e) {
+
+			return "redirect:/create_product";
+		}
+
 	}
 
 	@RequestMapping("/edit_product/{id}")
@@ -135,6 +147,7 @@ public class ProductController {
 
 		return "product_list";
 	}
+
 	@RequestMapping("/delete_product/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
 
@@ -146,5 +159,21 @@ public class ProductController {
 
 		return "redirect:/product_list";
 
+	}
+
+	public static Boolean isProductExist(List<Product> plist, String name) {
+
+		Boolean isExist = false;
+		String n = name.replaceAll("\\s", "").toLowerCase();
+
+		for (Product p : plist) {
+			if (n.equals(p.getName().toLowerCase().replaceAll("\\s", ""))) {
+				isExist = true;
+				break;
+
+			} else
+				return isExist;
+		}
+		return isExist;
 	}
 }

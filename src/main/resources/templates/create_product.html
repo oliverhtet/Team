@@ -68,14 +68,15 @@
 						method="post">
 						<h3 class="text-left text-info" style="margin-left: 30%">Create
 							Product</h3>
-						<br>
+
 						<div class="row">
 							<div class="col-md-6">
 								<label class="text-info">Name</label>
 							</div>
 							<div class="col-md-6">
 								<input type="text" th:field="*{name}" class="form-control"
-									id="id_name" required>
+									id="id_name" required> <label th:if="${errorMsg}"
+									class="error">This product name already exist.</label>
 							</div>
 						</div>
 						<br>
@@ -127,7 +128,7 @@
 						<br>
 						<div class="row">
 							<div class="col-md-6"></div>
-							<div class="col-md-4">
+							<div class="col-md-2">
 								<input type="submit" name="submit"
 									class="btn btn-primary btn-md" value="Save">
 							</div>
