@@ -135,4 +135,16 @@ public class ProductController {
 
 		return "product_list";
 	}
+	@RequestMapping("/delete_product/{id}")
+	public String wareDisable(Model model, @PathVariable Long id) {
+
+		Product product = productRepo.findById(id).orElseThrow();
+
+		product.setModifiedDate(new Date());
+		product.setStatus(Status.DISABEL);
+		productRepo.save(product);
+
+		return "redirect:/product_list";
+
+	}
 }
