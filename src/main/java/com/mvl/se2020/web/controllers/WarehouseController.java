@@ -47,20 +47,26 @@ public class WarehouseController {
 		List<Warehouse> wlist = null;
 		System.out.println();
 		if (w != null) {
-			if (w.getName() != null && w.getLocation() == null) {
+			if (w.getName() != null && !w.getName().isEmpty() && w.getLocation() == null) {
+
 				wlist = warehouseRepositroy.getByName(w.getName());
-			} else if (w.getLocation() != null) {
+			} else if (w.getLocation() != null && w.getName().isEmpty() && w.getName() == null) {
 
 				wlist = warehouseRepositroy.getByLocation(w.getLocation().toString());
-			} /*
-				 * else if (w.getName() != null && w.getLocation() != null) { wlist =
-				 * warehouseRepositroy.getByNameAndLocation(w.getLocation(), w.getName()); }
-				 */
+			} else if (w.getName() != null && !w.getName().isEmpty() && w.getLocation() != null) {
+
+				wlist = warehouseRepositroy.getByNameAndLocation(w.getLocation().toString(), w.getName());
+			} else {
+
+				wlist = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
+			}
 
 		} else {
+
 			wlist = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 		}
 
+		model.addAttribute("warehouse", w);
 		model.addAttribute("searchlocation", Location.values());
 		model.addAttribute("warehouses", wlist);
 		return "warehouse_list";
