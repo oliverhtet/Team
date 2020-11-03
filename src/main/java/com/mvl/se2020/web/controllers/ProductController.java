@@ -170,10 +170,9 @@ public class ProductController {
 			if (n.equals(p.getName().toLowerCase().replaceAll("\\s", ""))) {
 				isExist = true;
 				break;
-
-			} else
-				return isExist;
+			}
 		}
+		System.out.println(">>>>>>>>>>>>>> " + isExist);
 		return isExist;
 	}
 }
