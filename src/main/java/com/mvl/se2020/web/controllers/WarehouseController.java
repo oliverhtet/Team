@@ -45,11 +45,12 @@ public class WarehouseController {
 	public String warehuseInquery(Model model, HttpSession session, @ModelAttribute Warehouse w) {
 
 		List<Warehouse> wlist = null;
-
+		System.out.println();
 		if (w != null) {
 			if (w.getName() != null && w.getLocation() == null) {
 				wlist = warehouseRepositroy.getByName(w.getName());
-			} else if (w.getName() == null && w.getLocation() != null) {
+			} else if (w.getLocation() != null) {
+
 				wlist = warehouseRepositroy.getByLocation(w.getLocation().toString());
 			} /*
 				 * else if (w.getName() != null && w.getLocation() != null) { wlist =

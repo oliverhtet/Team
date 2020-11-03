@@ -19,7 +19,7 @@ public interface WarehouseRepositroy extends JpaRepository<Warehouse, Long> {
 
 	/*
 	 * @Query(value =
-	 * "Select * from warehouse where location=?1 and warehouse_name like %:name% and status='ENABLE'"
+	 * "Select * from warehouse where warehouse.location=location and warehouse_name like %:name% and status='ENABLE'"
 	 * , nativeQuery = true) List<Warehouse> getByNameAndLocation(Location location,
 	 * String name);
 	 */
