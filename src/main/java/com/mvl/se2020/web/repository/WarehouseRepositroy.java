@@ -11,6 +11,7 @@ import com.mvl.se2020.web.models.Warehouse;
 @Repository
 public interface WarehouseRepositroy extends JpaRepository<Warehouse, Long> {
 
+	//zmh
 	@Query(value = "Select * from warehouse where warehouse_name like %:wname% and status='ENABLE'", nativeQuery = true)
 	List<Warehouse> getByName(String wname);
 

@@ -41,6 +41,7 @@ public class WarehouseController {
 
 	}
 
+	//zmh
 	@RequestMapping(value = "/search_warehouse", method = RequestMethod.POST)
 	public String warehuseInquery(Model model, HttpSession session, @ModelAttribute Warehouse w) {
 
