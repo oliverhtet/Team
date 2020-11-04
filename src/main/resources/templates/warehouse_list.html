@@ -4,6 +4,7 @@
 <head>
 <title>SE2020</title>
 <link th:href="@{css/warehouse_list.css}" rel="stylesheet" />
+<link th:href="@{css/user_list.css}" rel="stylesheet" />
 
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -17,16 +18,16 @@
 </head>
 <body>
 	<div class="success" th:if="${message}!=null">
-			<span class="closebtn"
-				onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
-				!</strong> Warehouse data is successfully update.
-		</div>
-		<div class="success" th:if="${message1}!=null">
-			<span class="closebtn"
-				onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
-				!</strong> Warehouse data is successfully save.
-		</div>
-		
+		<span class="closebtn"
+			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
+			!</strong> Warehouse data is successfully update.
+	</div>
+	<div class="success" th:if="${message1}!=null">
+		<span class="closebtn"
+			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
+			!</strong> Warehouse data is successfully save.
+	</div>
+
 
 	<!-- Navigation -->
 	<nav class="main-menu">
@@ -123,9 +124,10 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<table class="table table-hover">
+			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
+					<th scope="col"></th>
 						<th scope="col">Name</th>
 						<th scope="col">Location</th>
 						<th scope="col">Create Date</th>
@@ -137,6 +139,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="ware:${warehouses}">
+					<td th:text="${wareStat.index}+1"></td>
 						<td th:text="${ware.name}"></td>
 						<td th:text="${ware.location}"></td>
 						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
