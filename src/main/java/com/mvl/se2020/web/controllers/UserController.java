@@ -133,14 +133,14 @@ public class UserController {
 		user.setModifiedDate(new Date());
 
 		model.addAttribute("user", user);
-
+	
 		userRepository.save(user);
 
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", userList);
-
-		return "redirect:/user_list";
+		model.addAttribute("message", "Success");
+		return "user_list";
 
 	}
 
@@ -169,7 +169,7 @@ public class UserController {
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", userList);
-		model.addAttribute("message", "Success");
+		model.addAttribute("update", "Success");
 
 		return "user_list";
 	}
@@ -212,10 +212,10 @@ public class UserController {
 		User user = userRepository.findById(id).orElseThrow();
 		user.setStatus(Status.DISABEL);
 		userRepository.save(user);
-
+		model.addAttribute("message", "Success");
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 		model.addAttribute("users", userList);
-
+		
 		return "redirect:/user_list";
 
 	}

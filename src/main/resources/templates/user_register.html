@@ -17,6 +17,11 @@
 <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="alert" th:if="${message}!=null">
+		<span class="closebtn"
+			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
+			!</strong> User is successfully save.
+	</div>
 	<!-- nav slide bar -->
 	<nav class="main-menu">
 		<ul>

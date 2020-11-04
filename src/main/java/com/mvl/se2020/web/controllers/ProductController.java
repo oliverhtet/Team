@@ -85,10 +85,11 @@ public class ProductController {
 
 				List<Warehouse> ware = wareRepo.getAllEnable(Status.ENABLE.toString());
 				model.addAttribute("warehouseList", ware);
-
+				
 				return "create_product";
 			}
-			return "redirect:/product_list";
+			model.addAttribute("message", "Success");
+			return "product_list";
 
 		} catch (Exception e) {
 
@@ -127,8 +128,8 @@ public class ProductController {
 
 		List<Product> pList = productRepo.findAllProduct(Status.ENABLE.toString());
 		model.addAttribute("productList", pList);
-
-		return "redirect:/product_list";
+		model.addAttribute("update", "Success");
+		return "product_list";
 	}
 
 	@RequestMapping(value = "/filter_product", method = RequestMethod.POST)

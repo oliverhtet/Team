@@ -2,7 +2,30 @@
 	url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+.success {
+	padding: 20px;
+	background-color: green;
+	color: white;
+	height: 60%;
+	width: 100%;
+	text-align: right;
+	margin-top: 2px;
+}
 
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: black;
+}
 .fa-2x {
 	font-size: 2em;
 }

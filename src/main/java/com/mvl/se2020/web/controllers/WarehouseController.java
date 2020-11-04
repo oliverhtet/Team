@@ -96,8 +96,8 @@ public class WarehouseController {
 		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
-
-		return "redirect:/warehouse_list";
+		model.addAttribute("message1", "Success");
+		return "warehouse_list";
 
 	}
 
@@ -127,7 +127,7 @@ public class WarehouseController {
 
 		model.addAttribute("warehouses", wareList);
 		System.out.println("Warehouse Create Post Method");
-
+		model.addAttribute("message", "Success");
 		return "warehouse_list";
 
 	}
@@ -140,7 +140,9 @@ public class WarehouseController {
 		ware.setModifiedDate(new Date());
 		ware.setStatus(Status.DISABEL);
 		warehouseRepositroy.save(ware);
-
+		
+		model.addAttribute("delete","Success");
+		
 		return "redirect:/warehouse_list";
 
 	}
