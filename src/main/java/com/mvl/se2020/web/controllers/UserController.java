@@ -172,6 +172,38 @@ public class UserController {
 		return "redirect:/user_list";
 	}
 
+	@RequestMapping(value = "/search_user", method = RequestMethod.POST)
+	public String searchUser(Model model, @ModelAttribute User user) {
+
+		List<User> userList = null;
+		if (user != null) {
+			
+			if (!user.getName().isEmpty() && user.getAccountType() != null) {
+
+				userList = userRepository.getUsersByNameAndRole(user.getName().toLowerCase(),
+						user.getAccountType().toString());
+
+			} else if (!user.getName().isEmpty() && user.getAccountType() == null) {
+
+				userList = userRepository.getUsersByName(user.getName().toLowerCase());
+
+			} else if (user.getName().isEmpty() && user.getAccountType() != null) {
+
+				userList = userRepository.getUsersByRole(user.getAccountType().toString());
+
+			} else {
+				userList = userRepository.findAllUsers(Status.ENABLE.toString());
+			}
+
+		} else {
+			userList = userRepository.findAllUsers(Status.ENABLE.toString());
+		}
+		model.addAttribute("users", userList);
+		model.addAttribute("accountType", AccountType.values());
+
+		return "user_list";
+	}
+
 	@RequestMapping("/delete_user/{id}")
 	public String userDelete(Model model, @PathVariable Long id) {
 

@@ -14,8 +14,26 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query(value = "Select * from product where status=?1", nativeQuery = true)
 	List<Product> findAllProduct(String string);
 
+	@Query(value = "Select * from product where product_name like %:name% and warehouse_id=:wareId and product_catagory=:category and status='ENABLE'", nativeQuery = true)
+	List<Product> getProductByAllFilter(String name, Long wareId, String category);
+
+	@Query(value = "Select * from product where product_name like %:name% and warehouse_id=:wareId and status='ENABLE'", nativeQuery = true)
+	List<Product> getProductByNameAndWareId(String name, Long wareId);
+
+	@Query(value = "Select * from product where product_name like %:name% and product_catagory=:category and status='ENABLE'", nativeQuery = true)
+	List<Product> getProductByNameAndCategory(String name, String category);
+
+	@Query(value = "Select * from product where warehouse_id=:wareId and product_catagory=:category and status='ENABLE'", nativeQuery = true)
+	List<Product> getProductByWareIdandCategory(Long wareId, String category);
+
+	@Query(value = "Select * from product where product_catagory=:category and status='ENABLE'", nativeQuery = true)
+	List<Product> getProductByCategory(String category);
+
+	@Query(value = "Select * from product where warehouse_id=:wareId and status='ENABLE'", nativeQuery = true)
+	List<Product> getProductByWareId(Long wareId);
+
 	@Query(value = "Select * from product where product_name like %:name% and status='ENABLE'", nativeQuery = true)
-	List<Product> findByName(String name);
+	List<Product> getProductByName(String name);
 
 	/*
 	 * @Query(value = "Select * from product where product_name like %:name%",

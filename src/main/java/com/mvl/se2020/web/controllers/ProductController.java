@@ -135,8 +135,27 @@ public class ProductController {
 	public String productSearch(Model model, @ModelAttribute Product p) {
 
 		List<Product> plist = null;
-		if (p.getName() != null) {
-			plist = productRepo.findByName(p.getName().toLowerCase());
+		if (p != null) {
+
+			if (!p.getName().isEmpty() && p.getWareId() != null && p.getCatagory() != null) {
+				plist = productRepo.getProductByAllFilter(p.getName().toLowerCase(), p.getWareId(),
+						p.getCatagory().toString());
+			} else if (!p.getName().isEmpty() && p.getWareId() != null && p.getCatagory() == null) {
+				plist = productRepo.getProductByNameAndWareId(p.getName().toLowerCase(), p.getWareId());
+			} else if (!p.getName().isEmpty() && p.getWareId() == null && p.getCatagory() != null) {
+				plist = productRepo.getProductByNameAndCategory(p.getName().toLowerCase(), p.getCatagory().toString());
+			} else if (p.getName().isEmpty() && p.getWareId() != null && p.getCatagory() != null) {
+				plist = productRepo.getProductByWareIdandCategory(p.getWareId(), p.getCatagory().toString());
+			} else if (p.getName().isEmpty() && p.getWareId() == null && p.getCatagory() != null) {
+				plist = productRepo.getProductByCategory(p.getCatagory().toString());
+			} else if (p.getName().isEmpty() && p.getWareId() != null && p.getCatagory() == null) {
+				plist = productRepo.getProductByWareId(p.getWareId());
+			} else if (!p.getName().isEmpty() && p.getWareId() == null && p.getCatagory() == null) {
+				plist = productRepo.getProductByName(p.getName().toLowerCase());
+			} else {
+				plist = productRepo.findAllProduct(Status.ENABLE.toString());
+			}
+
 		} else {
 			plist = productRepo.findAllProduct(Status.ENABLE.toString());
 		}
