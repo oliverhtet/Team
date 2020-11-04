@@ -24,12 +24,12 @@ import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.User;
 import com.mvl.se2020.web.repository.UserRepository;
 import com.mvl.se2020.web.repository.WarehouseRepositroy;
-import com.mvl.se2020.web.service.Service;
+import com.mvl.se2020.web.service.ProductService;
 
 @Controller
 public class UserController {
 
-	Service service = new Service();
+	ProductService service = new ProductService();
 
 	@Autowired
 	public UserRepository userRepository;

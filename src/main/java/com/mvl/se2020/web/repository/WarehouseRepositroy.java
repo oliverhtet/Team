@@ -24,4 +24,8 @@ public interface WarehouseRepositroy extends JpaRepository<Warehouse, Long> {
 	@Query(value = "Select * from warehouse where location=?1 and status='ENABLE'", nativeQuery = true)
 	List<Warehouse> getByLocation(String string);
 
+	
+	@Query(value = "Select * from warehouse where warehouse_id=?1 and status='ENABLE'", nativeQuery = true)
+	Warehouse getWareById(Long wareId);
+
 }

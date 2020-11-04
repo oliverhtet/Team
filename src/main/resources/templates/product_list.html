@@ -24,7 +24,7 @@
 
 </head>
 <body>
-<div class="alert" th:if="${message}!=null">
+	<div class="alert" th:if="${message}!=null">
 		<span class="closebtn"
 			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
 			!</strong> Product is successfully save.
@@ -37,32 +37,6 @@
 
 	<!-- Navigation -->
 	<nav class="main-menu">
-		<!-- <ul th:if="${usreRole}=='ADMIN'">
-			<li class="has-subnav active"><a th:href="@{/user_list}"> <i
-					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
-						Management </span>
-			</a></li>
-			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
-					class="fa fa-home fa-2x"></i> <span class="nav-text">
-						Warehouse Management </span>
-			</a></li>
-			<li class="has-subnav"><a th:href="@{/product_list}"> <i
-					class="fa fa-list fa-2x"></i> <span class="nav-text">
-						Products Management </span>
-			</a></li>
-
-		</ul>
-		<ul th:if="${usreRole}!='ADMIN'">
-			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
-					class="fa fa-home fa-2x"></i> <span class="nav-text">
-						Warehouse Management </span>
-			</a></li>
-			<li class="has-subnav active"><a th:href="@{/product_list}"> <i
-					class="fa fa-list fa-2x"></i> <span class="nav-text">
-						Products Management </span>
-			</a></li>
-
-		</ul> -->
 		<ul>
 			<li class="has-subnav"><a th:href="@{/user_list}"> <i
 					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
@@ -96,7 +70,7 @@
 				<h3>Product List</h3>
 			</div>
 			<div class="col-md-8">
-				<form th:action="@{/filter_product}" th:object="${product}"
+				<form th:action="@{/filter_product}" th:object="${productdto}"
 					method="post">
 					<div class="row">
 						<div class="col-md-3">
