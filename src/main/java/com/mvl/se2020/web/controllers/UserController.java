@@ -167,9 +167,11 @@ public class UserController {
 		userRepository.save(user);
 
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
-		model.addAttribute("users", userList);
 
-		return "redirect:/user_list";
+		model.addAttribute("users", userList);
+		model.addAttribute("message", "Success");
+
+		return "user_list";
 	}
 
 	@RequestMapping(value = "/search_user", method = RequestMethod.POST)
@@ -177,7 +179,7 @@ public class UserController {
 
 		List<User> userList = null;
 		if (user != null) {
-			
+
 			if (!user.getName().isEmpty() && user.getAccountType() != null) {
 
 				userList = userRepository.getUsersByNameAndRole(user.getName().toLowerCase(),

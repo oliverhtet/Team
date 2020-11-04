@@ -17,9 +17,15 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="/js/confirm.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<!-- nav slide bar -->
+	<div class="alert" th:if="${message}!=null">
+		<span class="closebtn"
+			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
+			!</strong> User is successfully update.
+	</div>
 	<nav class="main-menu">
 		<ul>
 			<li class="has-subnav active"><a th:href="@{/user_list}"> <i
@@ -141,7 +147,6 @@
 			</table>
 		</div>
 	</div>
-
 </body>
 </html>
 
