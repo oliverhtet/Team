@@ -13,15 +13,11 @@
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/user_list.css" />
+<link th:href="@{css/warehouse_list.css}" rel="stylesheet" />
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="alert" th:if="${message}!=null">
-		<span class="closebtn"
-			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
-			!</strong> User is successfully save.
-	</div>
 	<!-- nav slide bar -->
 	<nav class="main-menu">
 		<ul>
@@ -50,7 +46,7 @@
 	<!-- end of slide bar -->
 	<br>
 	<div class="container">
-	
+
 		<div id="login-row"
 			class="row justify-content-center align-items-center">
 			<div id="login-column" class="col-md-6">
@@ -75,7 +71,8 @@
 							</div>
 							<div class="col-md-6">
 								<input type="email" th:field="*{email}" class="form-control"
-									id="id_email" required>
+									id="id_email" required> <label th:if="${errorMsg}"
+									class="error">This product name already exist.</label>
 							</div>
 						</div>
 						<br>

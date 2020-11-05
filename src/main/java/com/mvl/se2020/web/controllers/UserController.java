@@ -25,6 +25,7 @@ import com.mvl.se2020.web.models.User;
 import com.mvl.se2020.web.repository.UserRepository;
 import com.mvl.se2020.web.repository.WarehouseRepositroy;
 import com.mvl.se2020.web.service.ProductService;
+import com.mvl.se2020.web.service.UserService;
 
 @Controller
 public class UserController {
@@ -33,7 +34,10 @@ public class UserController {
 
 	@Autowired
 	public UserRepository userRepository;
+	@Autowired
 	public WarehouseRepositroy wareRepo;
+	@Autowired
+	public UserService userService;
 
 	public AccountType accountType;
 
@@ -126,22 +130,33 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
-	public String userRegisterSubmit(Model model, @ModelAttribute User user, HttpSession session, BindingResult bind) {
-		user.setAccountType(AccountType.ADMIN);
-		user.setStatus(Status.ENABLE);
-		user.setCreateDate(new Date());
-		user.setModifiedDate(new Date());
+	public String userRegisterSubmit(Model model, @ModelAttribute User user) {
 
-		model.addAttribute("user", user);
-	
-		userRepository.save(user);
+		Boolean isExist = false;
+		isExist = userService.isExistUser(user.getEmail());
+		if (!isExist) {
 
-		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+			user.setAccountType(AccountType.ADMIN);
+			user.setStatus(Status.ENABLE);
+			user.setCreateDate(new Date());
+			user.setModifiedDate(new Date());
+			userRepository.save(user);
 
-		model.addAttribute("users", userList);
-		model.addAttribute("message", "Success");
+		} else {
+			model.addAttribute("user", user);
+			model.addAttribute("errorMsg", "Exist");
+			model.addAttribute("accountType", AccountType.values());
+
+			return "user_register";
+		}
+
+		List<User> ulist = userRepository.findAllUsers(Status.ENABLE.toString());
+
+		model.addAttribute("users", ulist);
+		model.addAttribute("user", new User());
+		model.addAttribute("accountType", AccountType.values());
+
 		return "user_list";
-
 	}
 
 	@RequestMapping("/edit_user/{id}")
@@ -215,7 +230,7 @@ public class UserController {
 		model.addAttribute("message", "Success");
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 		model.addAttribute("users", userList);
-		
+
 		return "redirect:/user_list";
 
 	}

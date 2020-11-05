@@ -30,4 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "Select * from user where role=:role and status='ENABLE'", nativeQuery = true)
 	List<User> getUsersByRole(String role);
 
+	@Query(value = "Select * from user where user_email=?1 and status='ENABLE'", nativeQuery = true)
+	List<User> findUserByEmail(String email);
+
 }
