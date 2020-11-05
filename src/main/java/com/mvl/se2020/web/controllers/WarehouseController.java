@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mvl.se2020.web.enumerations.Catagory;
 import com.mvl.se2020.web.enumerations.Location;
 import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.Product;
@@ -23,27 +24,32 @@ import com.mvl.se2020.web.repository.WarehouseRepositroy;
 @Controller
 public class WarehouseController {
 
-	
 	@Autowired
 	private WarehouseRepositroy warehouseRepositroy;
-	private ProductRepository productRepo;
-	
-//	Begin View Product in warehouse by WareID
-	@RequestMapping("/warehouse_view")
-	public String warehouseView(Model model, HttpSession session) {
+	@Autowired
+	private ProductRepository productRepository;
 
-		System.out.println("Product List Method with warehouse id");
-		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
-		model.addAttribute("warehouses", wareList);
-		model.addAttribute("searchlocation", Location.values());
+	/* Begin View Product in warehouse by WareID */
+	@RequestMapping("/warehouse_view/{id}")
+	public String warehouseView(Model model, HttpSession session, @PathVariable Long id) {
 
-		// for search
-		model.addAttribute("warehouse", new Warehouse());
+		Warehouse w = warehouseRepositroy.findById(id).orElseThrow();
+		model.addAttribute("warehouse", w);
+
+		List<Product> plist = productRepository.getProductByWareId(id);
+
+		if (plist != null) {
+			model.addAttribute("productList", plist);
+		} else {
+			model.addAttribute("productList", null);
+		}
+
+		model.addAttribute("catagory", Catagory.values());
 
 		return "warehouse_view";
 
-	}
-//	END 
+	} /* end method */
+
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
 
@@ -160,9 +166,9 @@ public class WarehouseController {
 		ware.setModifiedDate(new Date());
 		ware.setStatus(Status.DISABEL);
 		warehouseRepositroy.save(ware);
-		
-		model.addAttribute("delete","Success");
-		
+
+		model.addAttribute("delete", "Success");
+
 		return "redirect:/warehouse_list";
 
 	}

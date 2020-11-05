@@ -58,7 +58,7 @@
 
 	<br>
 
-	<div class="container">
+	<!-- <div class="container">
 		<form th:action="@{/search_warehouse}" th:object="${warehouse}"
 			method="post">
 			<div class="row">
@@ -94,8 +94,19 @@
 
 			</div>
 		</form>
-	</div>
+	</div> -->
 
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<strong th:text="${warehouse.name}"></strong>
+			</div>
+			<div class="col-md-7"></div>
+			<div class="col-md-1">
+				<a th:href="@{/warehouse_list}" class="btn btn-primary">Back</a>
+			</div>
+		</div>
+	</div>
 	<br>
 	<div class="modal fade" id="removeModalCenter" tabindex="-1"
 		role="dialog" aria-labelledby="removeModalCenterTitle"
@@ -127,27 +138,31 @@
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
-					<th scope="col"></th>
+						<th scope="col"></th>
 						<th scope="col">Name</th>
-						<th scope="col">Location</th>
-						<th scope="col">Create Date</th>
-						<th scope="col">Modified Date</th>
-						<th scope="col" colspan="3">Action</th>
-					
+						<th scope="col">Category</th>
+						<th scope="col">Price</th>
+						<th scope="col">Qty</th>
+
 
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="ware:${warehouses}">
-					<td th:text="${wareStat.index}+1"></td>
-						
-						<td th:text="${ware.location}"></td>
+					<tr th:each="p:${productList}">
+						<td th:text="${pStat.index}+1"></td>
+						<td th:text="${p.name}"></td>
+						<td th:text="${p.catagory}"></td>
+						<td th:text="${p.price}"></td>
+						<td th:text="${p.quantity}"></td>
+
+
+						<!-- <td th:text="${ware.location}"></td>
 						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(ware.modifiedDate,'dd/MM/yyyy')}"></td>
 						<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}"
 							class="btn btn-primary">Edit</a></td>
 						<td><a th:href="@{/delete_ware/{id}(id=${ware.id})}"
-							class="btn btn-danger delBtn">Delete</a></td>
+							class="btn btn-danger delBtn">Delete</a></td> -->
 					</tr>
 				</tbody>
 			</table>

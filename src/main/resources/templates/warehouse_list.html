@@ -127,19 +127,19 @@
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
-					<th scope="col"></th>
+						<th scope="col"></th>
 						<th scope="col">Name</th>
 						<th scope="col">Location</th>
 						<th scope="col">Create Date</th>
 						<th scope="col">Modified Date</th>
 						<th scope="col" colspan="3">Action</th>
-					
+
 
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="ware:${warehouses}">
-					<td th:text="${wareStat.index}+1"></td>
+						<td th:text="${wareStat.index}+1"></td>
 						<td th:text="${ware.name}"></td>
 						<td th:text="${ware.location}"></td>
 						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
@@ -148,11 +148,11 @@
 							class="btn btn-primary">Edit</a></td>
 						<td><a th:href="@{/delete_ware/{id}(id=${ware.id})}"
 							class="btn btn-danger delBtn">Delete</a></td>
-						<td><a th:href="@{/warehouse_view/{id}(id=${ware.id})"
+						<td><a th:href="@{/warehouse_view/{id}(id=${ware.id})}"
 							class="btn btn-primary">View Item</a></td>
-							
+
 					</tr>
-					
+
 				</tbody>
 			</table>
 		</div>

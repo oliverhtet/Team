@@ -83,4 +83,9 @@ public class ProductService {
 		}
 	}
 
+	public List<Product> getProductByWareId(Long id) {
+		List<Product> plist = productRepository.getProductByWareId(id);
+		return plist;
+	}
+
 }
