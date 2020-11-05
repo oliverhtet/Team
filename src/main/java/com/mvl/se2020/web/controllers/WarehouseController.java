@@ -15,15 +15,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mvl.se2020.web.enumerations.Location;
 import com.mvl.se2020.web.enumerations.Status;
+import com.mvl.se2020.web.models.Product;
 import com.mvl.se2020.web.models.Warehouse;
+import com.mvl.se2020.web.repository.ProductRepository;
 import com.mvl.se2020.web.repository.WarehouseRepositroy;
 
 @Controller
 public class WarehouseController {
 
+	
 	@Autowired
 	private WarehouseRepositroy warehouseRepositroy;
+	private ProductRepository productRepo;
+	
+//	Begin View Product in warehouse by WareID
+	@RequestMapping("/warehouse_view")
+	public String warehouseView(Model model, HttpSession session) {
 
+		System.out.println("Product List Method with warehouse id");
+		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
+		model.addAttribute("warehouses", wareList);
+		model.addAttribute("searchlocation", Location.values());
+
+		// for search
+		model.addAttribute("warehouse", new Warehouse());
+
+		return "warehouse_view";
+
+	}
+//	END 
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
 
