@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.mvl.se2020.web.models.User;
 
 /**
- * @author MyoGlobal Developer1
+ * @author zmh
  *
  */
 @Repository
