@@ -133,40 +133,39 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<table class="table table-hover table-bordered">
-				<thead>
-					<tr>
-						<th scope="col"></th>
-						<th scope="col">Name</th>
-						<th scope="col">Category</th>
-						<th scope="col">Price</th>
-						<th scope="col">Qty</th>
+
+	<div id="table-wrapper">
+		<table class="table-scroll">
+			<thead>
+				<tr>
+					<th scope="col"></th>
+					<th scope="col">Name</th>
+					<th scope="col">Category</th>
+					<th scope="col">Price</th>
+					<th scope="col">Qty</th>
 
 
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="p:${productList}">
-						<td th:text="${pStat.index}+1"></td>
-						<td th:text="${p.name}"></td>
-						<td th:text="${p.catagory}"></td>
-						<td th:text="${p.price}"></td>
-						<td th:text="${p.quantity}"></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="p:${productList}">
+					<td th:text="${pStat.index}+1"></td>
+					<td th:text="${p.name}"></td>
+					<td th:text="${p.catagory}"></td>
+					<td th:text="${p.price}"></td>
+					<td th:text="${p.quantity}"></td>
 
 
-						<!-- <td th:text="${ware.location}"></td>
+					<!-- <td th:text="${ware.location}"></td>
 						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(ware.modifiedDate,'dd/MM/yyyy')}"></td>
 						<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}"
 							class="btn btn-primary">Edit</a></td>
 						<td><a th:href="@{/delete_ware/{id}(id=${ware.id})}"
 							class="btn btn-danger delBtn">Delete</a></td> -->
-					</tr>
-				</tbody>
-			</table>
-		</div>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 </body>

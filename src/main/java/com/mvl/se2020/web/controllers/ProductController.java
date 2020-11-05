@@ -106,7 +106,6 @@ public class ProductController {
 	public String productUpdate(Model model, @PathVariable Long id) {
 
 		Product p = pservice.getProductById(id);
-		System.out.println("Product Update Method" + p.toString() + " <<<<<<<<<<<<<<<");
 		model.addAttribute("product", p);
 		model.addAttribute("categoryList", Catagory.values());
 
@@ -121,7 +120,6 @@ public class ProductController {
 	public String productUpdatePost(Model model, @ModelAttribute Product p) {
 
 		Product productUpdate = pservice.getProductById(p.getId());
-		System.out.println(productUpdate.toString() + " <<<<<<<<<<<<");
 		p.setCreateDate(productUpdate.getCreateDate());
 		p.setStatus(productUpdate.getStatus());
 		p.setModifiedDate(new Date());
