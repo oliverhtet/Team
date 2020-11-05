@@ -18,7 +18,7 @@ table th {
 	border-radius: 10px;
 }
 
-.delete {
+.delBtn {
 	width: 35%;
 	border-radius: 10px;
 	background: #DE1D57;
@@ -49,7 +49,7 @@ table {
 
 .alert {
 	padding: 20px;
-	background-color: green;
+	background-color: rgb(255, 0, 0);
 	color: white;
 	height: auto;
 	width: 100%;

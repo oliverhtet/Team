@@ -3,14 +3,7 @@
 
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
 
-table th {
-	position: sticky;
-	top: 0;
-	z-index: 5;
-	background: #0C438C;
-	color: white;
-	text-align: center;
-}
+
 
 #searchBtn {
 	width: 50px;
