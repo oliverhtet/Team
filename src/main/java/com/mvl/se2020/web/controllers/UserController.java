@@ -126,7 +126,7 @@ public class UserController {
 		model.addAttribute("user", user);
 
 		return "user_register";
-		
+
 		/* zmh */
 
 	}
@@ -157,6 +157,7 @@ public class UserController {
 		model.addAttribute("users", ulist);
 		model.addAttribute("user", new User());
 		model.addAttribute("accountType", AccountType.values());
+		model.addAttribute("success", "success");
 
 		return "user_list";
 	}
