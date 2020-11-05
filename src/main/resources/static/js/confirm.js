@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$('.nBtn, .table .eBtn').on('click', function(event) {
+	$('.nBtn, .alertMessage .eBtn').on('click', function(event) {
 		event.preventDefault();
 		var href = $(this).attr('href');
 		var text = $(this).text();
@@ -22,7 +22,7 @@ $(document).ready(function() {
 		}
 	});
 	//for delete user
-	$('.table .delBtn').on('click', function(event) {
+	$('.alertMessage .delBtn').on('click', function(event) {
 		event.preventDefault();
 		var href = $(this).attr('href');
 		$('#removeModalCenter #delRef').attr('href', href);

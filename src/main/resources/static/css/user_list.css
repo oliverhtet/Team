@@ -18,7 +18,7 @@ table th {
 	border-radius: 10px;
 }
 
-.delete {
+.delBtn {
 	width: 35%;
 	border-radius: 10px;
 	background: #DE1D57;
@@ -32,7 +32,7 @@ table th {
 	color: white;
 }
 
-table {
+.alertMessage {
 	margin-left: 5%;
 	width: 94%;
 	text-align: center;
@@ -49,11 +49,9 @@ table {
 
 .alert {
 	padding: 20px;
-	background-color: green;
-	color: white;
 	height: auto;
 	width: 100%;
-	text-align: right;
+	text-align: center;
 	margin-top: 2px;
 }
 
