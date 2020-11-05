@@ -61,7 +61,7 @@
 		<form th:action="@{/search_user}" th:object="${user}" method="post">
 			<div class="row">
 				<div class="col-md-4">
-					<h3>User List</h3>
+					<h5>User List</h5>
 				</div>
 				<div class="col-md-8">
 					<div class="row">
@@ -79,8 +79,7 @@
 							</select>
 						</div>
 						<div class="col-md-2">
-							<input type="submit" name="submit" class="btn btn-info btn-md"
-								value="Search">
+								<button type="submit" name="submit" value="Search" id="searchBtn"><i class="fa fa-search"></i></button>
 						</div>
 						<div class="col-md-1">
 							<a th:href="@{/create_user}" class="btn btn-primary btn-md">New</a>
@@ -119,11 +118,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<table class="table table-hover table-bordered">
+	</div>
+
+	<div id="table-wrapper">
+		<div id="table-scroll">
+			<table>
 				<thead>
 					<tr>
-						<th scope="col"></th>
+						<th scope="col">No</th>
 						<th scope="col">Name</th>
 						<th scope="col">Email</th>
 						<th scope="col">Phone</th>
@@ -131,9 +133,7 @@
 						<th scope="col">Birthday</th>
 						<th scope="col">Create Date</th>
 						<th scope="col">Modified Date</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-
+						<th scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -146,15 +146,16 @@
 						<td th:text="${#dates.format(user.dob, 'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(user.modifiedDate, 'dd/MM/yyyy')}"></td>
-						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"
-							class="btn btn-primary">Edit</a></td>
-						<td><a th:href="@{/delete_user/{id}(id=${user.id})}"
-							class="btn btn-danger delBtn">Delete</a></td>
+						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"><button
+									class="edit">Edit</button></a> <a
+							th:href="@{/delete_user/{id}(id=${user.id})}"><button
+									class="delete">Delete</button></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+
 </body>
 </html>
 

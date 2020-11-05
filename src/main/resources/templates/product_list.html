@@ -7,14 +7,12 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <title>SE2020</title>
 
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/user-profile.css" />
-<link th:href="@{css/warehouse_list.css}" rel="stylesheet" />
-<link th:href="@{css/user_list.css}" rel="stylesheet" />
+<link th:href="@{css/product_list.css}" rel="stylesheet" />
 <!-- JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="/js/confirm.js"></script>
@@ -64,7 +62,7 @@
 		<br>
 		<div class="row">
 			<div class="col-md-4">
-				<h3>Product List</h3>
+				<h5>Product List</h5>
 			</div>
 			<div class="col-md-8">
 				<form th:action="@{/filter_product}" th:object="${productdto}"
@@ -90,9 +88,12 @@
 									th:value="${category}" th:text="${category}"></option>
 							</select>
 						</div>
+
 						<div class="col-md-1">
-							<input type="submit" name="submit" class="btn btn-info btn-md"
-								value="Search">
+							<button type="submit" name="submit" value="Search" id="searchBtn">
+								<i class="fa fa-search"></i>
+							</button>
+
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-1">
@@ -129,12 +130,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<table class="table table-hover table-bordered">
+	<div id="table-wrapper">
+		<div id="table-scroll">
+			<table>
 				<thead>
 					<tr>
-						<th scope="col"></th>
+						<th scope="col">No</th>
 						<th scope="col">Name</th>
 						<th scope="col">Category</th>
 						<th scope="col">Price</th>
@@ -142,8 +143,7 @@
 						<th scope="col">Warehouse</th>
 						<th scope="col">Create Date</th>
 						<th scope="col">Modified Date</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
+						<th scope="col">Action</th>
 
 					</tr>
 				</thead>
@@ -157,11 +157,10 @@
 						<td th:text="${product.wareName}"></td>
 						<td th:text="${#dates.format(product.createDate, 'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(product.modifiedDate, 'dd/MM/yyyy')}"></td>
-						<td><a th:href="@{/edit_product/{id}(id=${product.id})}"
-							class="btn btn-primary">Edit</a></td>
-						<td><a th:href="@{/delete_product/{id}(id=${product.id})}"
-							class="btn btn-danger delBtn">Delete</a></td>
-
+						<td><a th:href="@{/edit_product/{id}(id=${product.id})}"><button
+									class="edit">Edit</button></a><a
+							th:href="@{/delete_product/{id}(id=${product.id})}"><button
+									class="delete">Delete</button></a></td>
 					</tr>
 				</tbody>
 			</table>

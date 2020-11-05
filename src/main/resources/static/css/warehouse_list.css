@@ -2,6 +2,58 @@
 	url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+
+table th {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	background: #0C438C;
+	color: white;
+	text-align: center;
+}
+
+#searchBtn {
+	width: 50px;
+	height: 90%;
+	border-radius: 10px;
+}
+
+.delete {
+	width: 25%;
+	border-radius: 10px;
+	background: #DE1D57;
+	color: white;
+}
+
+.edit {
+	width: 25%;
+	border-radius: 10px;
+	background: #1D86DE;
+	color: white;
+}
+
+.view {
+	width: 25%;
+	border-radius: 10px;
+	background: #F0D32C;
+	color: white;
+}
+
+table {
+	margin-left: 5%; width : 94%;
+	text-align: center;
+	width: 94%;
+}
+
+#table-wrapper {
+	position: relative;
+}
+
+#table-scroll {
+	height: 520px;
+	overflow: auto;
+}
+
 .success {
 	padding: 20px;
 	background-color: green;
@@ -26,6 +78,7 @@
 .closebtn:hover {
 	color: black;
 }
+
 .fa-2x {
 	font-size: 2em;
 }
