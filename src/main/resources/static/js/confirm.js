@@ -29,13 +29,19 @@ $(document).ready(function() {
 		$('#removeModalCenter').modal();
 	});
 
+	$('#fileImage').change(function() {
+		showImage(this);
+	});
 
 });
-//for table
-$(document).ready(function() {
-	$('#dtDynamicVerticalScrollExample').DataTable({
-		"scrollY": "50vh",
-		"scrollCollapse": true,
-	});
-	$('.dataTables_length').addClass('bs-select');
-});
+
+
+
+function showImage(fileInput) {
+	file = fileInput.files[0];
+	reader = new FileReader();
+	reader.onload = function(e) {
+		$('#previewimage').attr('src',e.target.result).width(100).height(100);
+	};
+	reader.readAsDataURL(file);
+}

@@ -43,6 +43,17 @@ public class Product {
 	@Column(name = "warehouse_name")
 	private String wareName;
 
+	@Column(name = "product_image")
+	private String image;
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public String getWareName() {
 		return wareName;
 	}
