@@ -13,6 +13,8 @@
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/user_list.css" />
+<link rel="stylesheet" href="/css/user_register.css" />
+
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 
@@ -44,113 +46,93 @@
 		</ul>
 	</nav>
 	<!-- end of slide bar -->
-	<br>
-	<div class="container">
-		<div id="login-row"
-			class="row justify-content-center align-items-center">
-			<div id="login-column" class="col-md-6">
-				<div id="login-box" class="col-md-12">
-					<form th:action="@{/edit_user}" th:object="${user}" method="post">
-						<input type="hidden" th:field="*{id}" /> <input type="hidden"
-							th:field="*{password}" />
-						<h3 class="text-left text-info" style="margin-left: 30%">Edit
-							User</h3>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">User Name</label>
-							</div>
-							<div class="col-md-6">
-								<input type="text" th:field="*{name}" class="form-control"
-									id="id_name" required>
-							</div>
+	<div id="login-row" style="margin-top: 15px"
+		class="row justify-content-center align-items-center">
+		<div id="login-column" class="col-md-5">
+			<div id="login-box" class="col-md-12">
+				<form th:action="@{/edit_user}" th:object="${user}" method="post">
+					<input type="hidden" th:field="*{id}" /> <input type="hidden"
+						th:field="*{password}" />
+					<h5 style="text-align: center; margin-top: 12px">Edit
+						User</h5>
+					<br>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">User Name</label>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">User Email</label>
-							</div>
-							<div class="col-md-6">
-								<input type="email" th:field="*{email}" class="form-control"
-									id="id_email" required>
-							</div>
+						<div class="col-md-7">
+							<input type="text" th:field="*{name}" class="form-control"
+								id="id_name" required>
 						</div>
-						<!-- <br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Password</label>
-							</div>
-							<div class="col-md-6">
-								<input type="password" th:field="*{password}"
-									class="form-control" id="id_password" required>
-							</div>
-						</div> -->
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Date Of Birth</label>
-							</div>
-							<div class="col-md-6">
-								<input type="text" th:field="*{dob}" class="form-control dob"
-									data-date-format="dd/MM/yyyy" id="id_dob">
-							</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">User Email</label>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Phone No.</label>
-							</div>
-							<div class="col-md-6">
-								<input type="number" th:field="*{phone}" class="form-control"
-									id="id_phone" required>
-							</div>
+						<div class="col-md-7">
+							<input type="email" th:field="*{email}" class="form-control"
+								id="id_email" required>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">NRC.</label>
-							</div>
-							<div class="col-md-6">
-								<input type="text" th:field="*{nrc}" class="form-control"
-									id="id_nrc" required>
-							</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">Date Of Birth</label>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Address</label>
-							</div>
-							<div class="col-md-6">
-								<textarea th:field="*{address}" id="id_address"
-									class="md-textarea form-control"></textarea>
-							</div>
+						<div class="col-md-7">
+							<input type="text" th:field="*{dob}" class="form-control dob"
+								data-date-format="dd/MM/yyyy" id="id_dob">
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Account Type</label>
-							</div>
-							<div class="col-md-6">
-								<select name="accountType" class="browser-default custom-select"
-									th:field="*{accountType}">
-									<option th:each="accType : ${accountType}"
-										th:value="${accType}" th:text="${accType}"></option>
-								</select>
-							</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">Phone No.</label>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6"></div>
-							<div class="col-md-3">
-								<input type="submit" name="submit"
-									class="btn btn-success btn-md" value="Update">
-							</div>
-							<div class="col-md-3">
-								<a th:href="@{/user_list}" class="btn btn-primary">Back</a>
-							</div>
+						<div class="col-md-7">
+							<input type="number" th:field="*{phone}" class="form-control"
+								id="id_phone" required>
 						</div>
-					</form>
-				</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">NRC.</label>
+						</div>
+						<div class="col-md-7">
+							<input type="text" th:field="*{nrc}" class="form-control"
+								id="id_nrc" required>
+						</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">Address</label>
+						</div>
+						<div class="col-md-7">
+							<textarea th:field="*{address}" id="id_address"
+								class="md-textarea form-control"></textarea>
+						</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">Account Type</label>
+						</div>
+						<div class="col-md-7">
+							<select name="accountType" class="browser-default custom-select"
+								th:field="*{accountType}">
+								<option th:each="accType : ${accountType}" th:value="${accType}"
+									th:text="${accType}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="row" style="margin-top: 17px; margin-bottom: 17px">
+						<div class="col-md-3"></div>
+						<div class="col-md-3">
+							<input type="submit" name="submit" class="btn btn-success btn-md"
+								value="Update" style="width: 100%">
+						</div>
+						<div class="col-md-3">
+							<a th:href="@{/user_list}" class="btn btn-primary" style="width: 100%">Back</a>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

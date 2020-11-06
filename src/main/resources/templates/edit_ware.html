@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/user-profile.css" />
 <link rel="stylesheet" href="/css/user_list.css" />
+<link rel="stylesheet" href="/css/user_register.css" />
 <!-- JS -->
 <script src="/js/bootstrap.min.js"></script>
 <body>
@@ -44,54 +45,51 @@
 	</nav>
 	<!-- end of nav -->
 
-	<br>
-	<div class="container">
-		<div id="login-row"
-			class="row justify-content-center align-items-center">
-			<div id="login-column" class="col-md-6">
-				<div id="login-box" class="col-md-12">
-					<form th:action="@{/edit_ware}" th:object="${warehouse}"
-						method="post">
-						<input type="hidden" th:field="*{id}" />
+	<div id="login-row" style="margin-top: 10%"
+		class="row justify-content-center align-items-center">
+		<div id="login-column" class="col-md-5">
+			<div id="login-box" class="col-md-12">
+				<form th:action="@{/edit_ware}" th:object="${warehouse}"
+					method="post">
+					<input type="hidden" th:field="*{id}" />
 
-						<h3 class="text-left text-info" style="margin-left: 30%">Edit
-							Warehouse</h3>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Name</label>
-							</div>
-							<div class="col-md-6">
-								<input type="text" th:field="*{name}" class="form-control"
-									id="id_name" required>
-							</div>
+					<h5 style="text-align: center; margin-top: 12px">Edit
+						Warehouse</h5>
+					<br>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">Name</label>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="text-info">Location</label>
-							</div>
-							<div class="col-md-6">
-								<select name="location" class="browser-default custom-select"
-									th:field="*{location}">
-									<option th:each="location : ${locationList}"
-										th:value="${location}" th:text="${location}"></option>
-								</select>
-							</div>
+						<div class="col-md-7">
+							<input type="text" th:field="*{name}" class="form-control"
+								id="id_name" required>
 						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-4"></div>
-							<div class="col-md-2">
-								<input type="submit" name="submit"
-									class="btn btn-success btn-md" value="Update">
-							</div>
-							<div class="col-md-2">
-								<a th:href="@{/warehouse_list}" class="btn btn-primary">Back</a>
-							</div>
+					</div>
+					<div class="row" style="margin-top: 17px">
+						<div class="col-md-5">
+							<label class="text-info">Location</label>
 						</div>
-					</form>
-				</div>
+						<div class="col-md-7">
+							<select name="location" class="browser-default custom-select"
+								th:field="*{location}">
+								<option th:each="location : ${locationList}"
+									th:value="${location}" th:text="${location}"></option>
+							</select>
+						</div>
+					</div>
+					<br>
+					<div class="row" style="margin-top: 17px; margin-bottom: 17px">
+						<div class="col-md-3"></div>
+						<div class="col-md-3">
+							<input type="submit" name="submit" class="btn btn-success btn-md"
+								value="Update" style="width: 100%">
+						</div>
+						<div class="col-md-3">
+							<a th:href="@{/warehouse_list}" class="btn btn-primary"
+								style="width: 100%">Back</a>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
