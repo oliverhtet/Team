@@ -11,21 +11,21 @@
 	border-radius: 10px;
 }
 
-.delBtn {
+.deleteBtn {
 	width: 25%;
 	border-radius: 10px;
 	background: #DE1D57;
 	color: white;
 }
 
-.edit {
+.editBtn {
 	width: 25%;
 	border-radius: 10px;
 	background: #1D86DE;
 	color: white;
 }
 
-.view {
+.viewBtn {
 	width: 25%;
 	border-radius: 10px;
 	background: #F0D32C;

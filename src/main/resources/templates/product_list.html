@@ -156,10 +156,10 @@
 						<td th:text="${product.wareName}"></td>
 						<td th:text="${#dates.format(product.createDate, 'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(product.modifiedDate, 'dd/MM/yyyy')}"></td>
-						<td><a th:href="@{/edit_product/{id}(id=${product.id})}"><button
-									class="edit">Edit</button></a><a
-							th:href="@{/delete_product/{id}(id=${product.id})}"><button
-									class="delBtn">Delete</button></a></td>
+						<td><a th:href="@{/edit_product/{id}(id=${product.id})}" class="edit"><button
+									class="editBtn">Edit</button></a><a
+							th:href="@{/delete_product/{id}(id=${product.id})}" class="delBtn"><button
+									class="deleteBtn">Delete</button></a></td>
 					</tr>
 				</tbody>
 			</table>

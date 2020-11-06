@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -126,9 +127,6 @@ public class UserController {
 		model.addAttribute("user", user);
 
 		return "user_register";
-
-		/* zmh */
-
 	}
 
 	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
@@ -149,7 +147,7 @@ public class UserController {
 			model.addAttribute("errorMsg", "Exist");
 			model.addAttribute("accountType", AccountType.values());
 
-			return "user_register";
+			return "user_list";
 		}
 
 		List<User> ulist = userRepository.findAllUsers(Status.ENABLE.toString());
@@ -192,25 +190,17 @@ public class UserController {
 		return "user_list";
 	}
 
-	@RequestMapping(value = "/search_user", method = RequestMethod.POST)
+	@PostMapping(value = "/search_user")
 	public String searchUser(Model model, @ModelAttribute User user) {
-
 		List<User> userList = null;
 		if (user != null) {
-
 			if (!user.getName().isEmpty() && user.getAccountType() != null) {
-
 				userList = userRepository.getUsersByNameAndRole(user.getName().toLowerCase(),
 						user.getAccountType().toString());
-
 			} else if (!user.getName().isEmpty() && user.getAccountType() == null) {
-
 				userList = userRepository.getUsersByName(user.getName().toLowerCase());
-
 			} else if (user.getName().isEmpty() && user.getAccountType() != null) {
-
 				userList = userRepository.getUsersByRole(user.getAccountType().toString());
-
 			} else {
 				userList = userRepository.findAllUsers(Status.ENABLE.toString());
 			}
@@ -220,20 +210,17 @@ public class UserController {
 		}
 		model.addAttribute("users", userList);
 		model.addAttribute("accountType", AccountType.values());
-
 		return "user_list";
 	}
 
 	@RequestMapping("/delete_user/{id}")
 	public String userDelete(Model model, @PathVariable Long id) {
-
 		User user = userRepository.findById(id).orElseThrow();
 		user.setStatus(Status.DISABEL);
 		userRepository.save(user);
 		model.addAttribute("message", "Success");
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 		model.addAttribute("users", userList);
-
 		return "redirect:/user_list";
 
 	}
@@ -241,7 +228,6 @@ public class UserController {
 	@InitBinder("user")
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		// dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, "dob", new CustomDateEditor(dateFormat, true));
 	}
 }

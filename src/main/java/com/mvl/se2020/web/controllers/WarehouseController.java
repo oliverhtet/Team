@@ -32,10 +32,8 @@ public class WarehouseController {
 	/* Begin View Product in warehouse by WareID */
 	@RequestMapping("/warehouse_view/{id}")
 	public String warehouseView(Model model, HttpSession session, @PathVariable Long id) {
-
 		Warehouse w = warehouseRepositroy.findById(id).orElseThrow();
 		model.addAttribute("warehouse", w);
-
 		List<Product> plist = productRepository.getProductByWareId(id);
 
 		if (plist != null) {
@@ -43,31 +41,21 @@ public class WarehouseController {
 		} else {
 			model.addAttribute("productList", null);
 		}
-
 		model.addAttribute("catagory", Catagory.values());
-
 		return "warehouse_view";
 
 	} /* end method */
 
 	@RequestMapping("/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
-
-		System.out.println("Warehouse List Method");
-
 		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
-
 		model.addAttribute("warehouses", wareList);
 		model.addAttribute("searchlocation", Location.values());
-
-		// for search
 		model.addAttribute("warehouse", new Warehouse());
-
 		return "warehouse_list";
 
 	}
 
-	// zmh
 	@RequestMapping(value = "/search_warehouse", method = RequestMethod.POST)
 	public String warehuseInquery(Model model, HttpSession session, @ModelAttribute Warehouse w) {
 
@@ -96,45 +84,30 @@ public class WarehouseController {
 
 	@RequestMapping("/create_ware")
 	public String wareCreate(Model model) {
-
 		Warehouse ware = new Warehouse();
-
 		model.addAttribute("locationList", Location.values());
 		model.addAttribute("warehouse", ware);
-		System.out.println("Warehouse Create Method");
-
 		return "create_ware";
 
 	}
 
 	@RequestMapping(value = "/create_ware", method = RequestMethod.POST)
 	public String wareCreatePost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
-
 		warehouse.setStatus(Status.ENABLE);
 		warehouse.setCreateDate(new Date());
 		warehouse.setModifiedDate(new Date());
-		/*
-		 * warehouse.setCreateUserId(u.getId()); warehouse.setModifiedUserId(u.getId());
-		 */
-
 		warehouseRepositroy.save(warehouse);
-
 		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouses", wareList);
-		System.out.println("Warehouse Create Post Method");
 		model.addAttribute("message1", "Success");
-		return "warehouse_list";
-
+		return "redirect:/warehouse_list";
 	}
 
 	@RequestMapping("/edit_ware/{id}")
 	public String wareEdit(Model model, @PathVariable Long id) {
-
 		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
 		model.addAttribute("warehouse", ware);
 		model.addAttribute("locationList", Location.values());
-		System.out.println("Warehouse Edit Method");
-
 		return "edit_ware";
 
 	}
@@ -142,33 +115,23 @@ public class WarehouseController {
 	@RequestMapping(value = "/edit_ware", method = RequestMethod.POST)
 	public String wareEditPost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
 		Warehouse db_ware = warehouseRepositroy.findById(warehouse.getId()).orElseThrow();
-
 		warehouse.setCreateDate(db_ware.getCreateDate());
 		warehouse.setStatus(db_ware.getStatus());
 		warehouse.setModifiedDate(new Date());
-
 		warehouseRepositroy.save(warehouse);
-
 		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
-
 		model.addAttribute("warehouses", wareList);
-		System.out.println("Warehouse Create Post Method");
 		model.addAttribute("message", "Success");
 		return "warehouse_list";
-
 	}
 
 	@RequestMapping("/delete_ware/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
-
 		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
-
 		ware.setModifiedDate(new Date());
 		ware.setStatus(Status.DISABEL);
 		warehouseRepositroy.save(ware);
-
 		model.addAttribute("delete", "Success");
-
 		return "redirect:/warehouse_list";
 
 	}

@@ -108,8 +108,8 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p class="alert alert-danger">Are you sure want to delete
-							this User?</p>
+						<p class="alert alert-danger">Are you sure want to delete this
+							User?</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
@@ -147,11 +147,10 @@
 						<td th:text="${#dates.format(user.dob, 'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(user.modifiedDate, 'dd/MM/yyyy')}"></td>
-
-						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"><button
-									class="edit">Edit</button></a> <a
-							th:href="@{/delete_user/{id}(id=${user.id})}"><button
-									class="delBtn">Delete</button></a></td>
+						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"
+							class="edit"><button class="editBtn">Edit</button></a> <a
+							th:href="@{/delete_user/{id}(id=${user.id})}" class="delBtn"><button
+									class="deleteBtn">Delete</button></a></td>
 
 					</tr>
 				</tbody>

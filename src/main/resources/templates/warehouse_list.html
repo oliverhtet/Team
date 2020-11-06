@@ -142,12 +142,12 @@
 						<td th:text="${ware.location}"></td>
 						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
 						<td th:text="${#dates.format(ware.modifiedDate,'dd/MM/yyyy')}"></td>
-						<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}"><button
-									class="edit">Edit</button></a><a
-							th:href="@{/delete_ware/{id}(id=${ware.id})}"><button
-									class="delBtn">Delete</button></a> <a
-							th:href="@{/warehouse_view/{id}(id=${ware.id})}"><button
-									class="view">View Item</button></a></td>
+						<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}" class="edit"><button
+									class="editBtn">Edit</button></a><a
+							th:href="@{/delete_ware/{id}(id=${ware.id})}" class="delBtn"><button
+									class="deleteBtn">Delete</button></a> <a
+							th:href="@{/warehouse_view/{id}(id=${ware.id})}" class="view"><button
+									class="viewBtn">View Item</button></a></td>
 					</tr>
 
 				</tbody>

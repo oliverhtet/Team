@@ -18,14 +18,14 @@ table th {
 	border-radius: 10px;
 }
 
-.delBtn {
+.deleteBtn {
 	width: 35%;
 	border-radius: 10px;
 	background: #DE1D57;
 	color: white;
 }
 
-.edit {
+.editBtn {
 	width: 35%;
 	border-radius: 10px;
 	background: #1D86DE;
