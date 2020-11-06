@@ -4,12 +4,12 @@
 <head>
 <title>SE2020</title>
 <link th:href="@{css/warehouse_list.css}" rel="stylesheet" />
-<link th:href="@{css/user_list.css}" rel="stylesheet" />
 
 <!-- CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/user-profile.css" />
 <link rel="stylesheet" href="/css/warehouse_list.css" />
+<link rel="stylesheet" href="/css/user_list.css" />
 <!-- JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="/js/confirm.js"></script>
@@ -17,18 +17,6 @@
 
 </head>
 <body>
-	<div class="success" th:if="${message}!=null">
-		<span class="closebtn"
-			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
-			!</strong> Warehouse data is successfully update.
-	</div>
-	<div class="success" th:if="${message1}!=null">
-		<span class="closebtn"
-			onclick="this.parentElement.style.display='none';">&times;</span> <strong>Successful
-			!</strong> Warehouse data is successfully save.
-	</div>
-
-
 	<!-- Navigation -->
 	<nav class="main-menu">
 		<ul>
@@ -57,45 +45,6 @@
 	<!-- end nav -->
 
 	<br>
-
-	<!-- <div class="container">
-		<form th:action="@{/search_warehouse}" th:object="${warehouse}"
-			method="post">
-			<div class="row">
-				<div class="col-md-4">
-					<h3>Warehouse List</h3>
-				</div>
-				<div class="col-md-8">
-					<div class="row">
-						<div class="col-md-3"></div>
-						<div class="col-md-3">
-							<input type="text" th:field="*{name}" id="id_name"
-								class="form-control" placeholder="Warehouse Name" />
-						</div>
-						<div class="col-md-3">
-							<select name="location" class="browser-default custom-select"
-								th:field="*{location}">
-								<option value="">Choose Location</option>
-								<option th:each="location : ${searchlocation}"
-									th:value="${location}" th:text="${location}">Choose
-									Location</option>
-							</select>
-						</div>
-						<div class="col-md-2">
-							<input type="submit" name="submit" class="btn btn-info btn-md"
-								value="Search">
-						</div>
-						<div class="col-md-1">
-							<a th:href="@{/create_ware}" class="btn btn-primary btn-md">New</a>
-						</div>
-					</div>
-
-				</div>
-
-			</div>
-		</form>
-	</div> -->
-
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
@@ -133,12 +82,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<table class="table table-hover table-bordered">
+		<div id="table-wrapper">
+		<div id="table-scroll">
+			<table class="alertMessage">
 				<thead>
 					<tr>
-						<th scope="col"></th>
+						<th scope="col">No</th>
 						<th scope="col">Name</th>
 						<th scope="col">Category</th>
 						<th scope="col">Price</th>
@@ -154,20 +103,10 @@
 						<td th:text="${p.catagory}"></td>
 						<td th:text="${p.price}"></td>
 						<td th:text="${p.quantity}"></td>
-
-
-						<!-- <td th:text="${ware.location}"></td>
-						<td th:text="${#dates.format(ware.createDate,'dd/MM/yyyy')}"></td>
-						<td th:text="${#dates.format(ware.modifiedDate,'dd/MM/yyyy')}"></td>
-						<td><a th:href="@{/edit_ware/{id}(id=${ware.id})}"
-							class="btn btn-primary">Edit</a></td>
-						<td><a th:href="@{/delete_ware/{id}(id=${ware.id})}"
-							class="btn btn-danger delBtn">Delete</a></td> -->
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
 </body>
 </html>
