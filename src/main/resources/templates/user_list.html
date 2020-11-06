@@ -58,7 +58,7 @@
 	<!-- end of slide bar -->
 	<br>
 	<div class="container">
-		<form th:action="@{/search_user}" th:object="${user}" method="post">
+		<form th:action="@{/search_user}" th:object="${userDTO}" method="post">
 			<div class="row">
 				<div class="col-md-4">
 					<h5>User List</h5>
@@ -72,10 +72,10 @@
 						</div>
 						<div class="col-md-3">
 							<select name="accountType" class="browser-default custom-select"
-								th:field="*{accountType}">
+								th:field="*{role}">
 								<option value="">Choose Role</option>
-								<option th:each="role : ${accountType}" th:value="${role}"
-									th:text="${role}">Choose Location</option>
+								<option th:each="role : ${roles}" th:value="${role.id}"
+									th:text="${role.name}"></option>
 							</select>
 						</div>
 						<div class="col-md-2">
@@ -132,8 +132,8 @@
 						<th scope="col">Phone</th>
 						<th scope="col">Role</th>
 						<th scope="col">Birthday</th>
-						<th scope="col">Create Date</th>
-						<th scope="col">Modified Date</th>
+						<th scope="col">NRC No.</th>
+						<th scope="col">Address</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -143,10 +143,10 @@
 						<td th:text="${user.name}"></td>
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.phone}"></td>
-						<td th:text="${user.accountType}"></td>
+						<td th:text="${user.role.name}"></td>
 						<td th:text="${#dates.format(user.dob, 'dd/MM/yyyy')}"></td>
-						<td th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}"></td>
-						<td th:text="${#dates.format(user.modifiedDate, 'dd/MM/yyyy')}"></td>
+						<td th:text="${user.nrc}"></td>
+						<td th:text="${user.address}"></td>
 						<td><a th:href="@{/edit_user/{id}(id=${user.id})}"
 							class="edit"><button class="editBtn">Edit</button></a> <a
 							th:href="@{/delete_user/{id}(id=${user.id})}" class="delBtn"><button

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mvl.se2020.web.enumerations.AccountType;
+import com.mvl.se2020.web.dto.UserInquiryDTO;
 import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.User;
+import com.mvl.se2020.web.repository.RoleRepository;
 import com.mvl.se2020.web.repository.UserRepository;
 import com.mvl.se2020.web.repository.WarehouseRepositroy;
 import com.mvl.se2020.web.service.ProductService;
@@ -40,7 +40,8 @@ public class UserController {
 	@Autowired
 	public UserService userService;
 
-	public AccountType accountType;
+	@Autowired
+	public RoleRepository roleRepository;
 
 	@RequestMapping("/index")
 	public ModelAndView userLogin(Model model) {
@@ -61,17 +62,18 @@ public class UserController {
 			return "index";
 		} else {
 
-			String userRole = service_user.getAccountType().toString();
+			return "redirect:/user_list";
+			// String userRole = service_user.getRole().toString();
 
-			if (service_user.getAccountType() == AccountType.ADMIN) {
-				model.addAttribute("userRole", userRole);
-				return "redirect:/user_list";
-
-			} else {
-				model.addAttribute("userRole", userRole);
-				return "redirect:/product_list";
-
-			}
+			/*
+			 * if (service_user.getRole() == 'ADMIN') { model.addAttribute("userRole",
+			 * userRole); return "redirect:/user_list";
+			 * 
+			 * } else { model.addAttribute("userRole", userRole); return
+			 * "redirect:/product_list";
+			 * 
+			 * }
+			 */
 
 		}
 	}
@@ -82,8 +84,8 @@ public class UserController {
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", userList);
-		model.addAttribute("user", new User());
-		model.addAttribute("accountType", AccountType.values());
+		model.addAttribute("userDTO", new UserInquiryDTO());
+		model.addAttribute("roles", roleRepository.findAll());
 
 		return "user_list";
 	}
@@ -123,10 +125,10 @@ public class UserController {
 	public String userRegister(Model model) {
 		User user = new User();
 
-		model.addAttribute("accountType", AccountType.values());
+		model.addAttribute("roles", roleRepository.findAll());
 		model.addAttribute("user", user);
 
-		return "user_register";
+		return "create_user";
 	}
 
 	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
@@ -135,8 +137,6 @@ public class UserController {
 		Boolean isExist = false;
 		isExist = userService.isExistUser(user.getEmail());
 		if (!isExist) {
-
-			user.setAccountType(AccountType.ADMIN);
 			user.setStatus(Status.ENABLE);
 			user.setCreateDate(new Date());
 			user.setModifiedDate(new Date());
@@ -145,19 +145,19 @@ public class UserController {
 		} else {
 			model.addAttribute("user", user);
 			model.addAttribute("errorMsg", "Exist");
-			model.addAttribute("accountType", AccountType.values());
+			model.addAttribute("roles", roleRepository.findAll());
 
-			return "user_list";
+			return "create_user";
 		}
 
 		List<User> ulist = userRepository.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", ulist);
 		model.addAttribute("user", new User());
-		model.addAttribute("accountType", AccountType.values());
+		model.addAttribute("roles", roleRepository.findAll());
 		model.addAttribute("success", "success");
 
-		return "user_list";
+		return "redirect:/user_list";
 	}
 
 	@RequestMapping("/edit_user/{id}")
@@ -165,7 +165,7 @@ public class UserController {
 
 		User user = userRepository.findById(id).orElseThrow();
 
-		model.addAttribute("accountType", AccountType.values());
+		model.addAttribute("roles", roleRepository.findAll());
 		model.addAttribute("user", user);
 
 		return "edit_user";
@@ -173,34 +173,39 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
-	public String editPagePost(Model model, @ModelAttribute User user, BindingResult bind) {
+	public String editPagePost(Model model, @ModelAttribute User user) {
+		try {
+			User db_user = userRepository.findById(user.getId()).orElseThrow();
+			user.setStatus(db_user.getStatus());
+			user.setCreateDate(db_user.getCreateDate());
+			user.setModifiedDate(new Date());
 
-		User db_user = userRepository.findById(user.getId()).orElseThrow();
-		user.setStatus(db_user.getStatus());
-		user.setCreateDate(db_user.getCreateDate());
-		user.setModifiedDate(new Date());
+			userRepository.save(user);
 
-		userRepository.save(user);
+			List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
 
-		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+			model.addAttribute("user", new User());
+			model.addAttribute("users", userList);
+			model.addAttribute("update", "Success");
 
-		model.addAttribute("users", userList);
-		model.addAttribute("update", "Success");
+			return "redirect:/user_list";
+		} catch (Exception e) {
+			return null;
+		}
 
-		return "user_list";
 	}
 
 	@PostMapping(value = "/search_user")
-	public String searchUser(Model model, @ModelAttribute User user) {
+	public String searchUser(Model model, @ModelAttribute UserInquiryDTO userDTO) {
 		List<User> userList = null;
-		if (user != null) {
-			if (!user.getName().isEmpty() && user.getAccountType() != null) {
-				userList = userRepository.getUsersByNameAndRole(user.getName().toLowerCase(),
-						user.getAccountType().toString());
-			} else if (!user.getName().isEmpty() && user.getAccountType() == null) {
-				userList = userRepository.getUsersByName(user.getName().toLowerCase());
-			} else if (user.getName().isEmpty() && user.getAccountType() != null) {
-				userList = userRepository.getUsersByRole(user.getAccountType().toString());
+		if (userDTO != null) {
+			if (!userDTO.getName().isEmpty() && userDTO.getRole() != null) {
+				userList = userRepository.getUsersByNameAndRoleId(userDTO.getName().toLowerCase(),
+						userDTO.getRole().getId());
+			} else if (!userDTO.getName().isEmpty() && userDTO.getRole() == null) {
+				userList = userRepository.getUsersByName(userDTO.getName().toLowerCase());
+			} else if (userDTO.getName().isEmpty() && userDTO.getRole() != null) {
+				userList = userRepository.getUsersByRoleId(userDTO.getRole().getId());
 			} else {
 				userList = userRepository.findAllUsers(Status.ENABLE.toString());
 			}
@@ -208,8 +213,10 @@ public class UserController {
 		} else {
 			userList = userRepository.findAllUsers(Status.ENABLE.toString());
 		}
+		model.addAttribute("userDTO", userDTO);
 		model.addAttribute("users", userList);
-		model.addAttribute("accountType", AccountType.values());
+		model.addAttribute("roles", roleRepository.findAll());
+
 		return "user_list";
 	}
 
@@ -220,6 +227,7 @@ public class UserController {
 		userRepository.save(user);
 		model.addAttribute("message", "Success");
 		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+
 		model.addAttribute("users", userList);
 		return "redirect:/user_list";
 

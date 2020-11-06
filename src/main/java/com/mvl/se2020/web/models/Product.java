@@ -2,6 +2,7 @@ package com.mvl.se2020.web.models;
 
 import java.util.Date;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

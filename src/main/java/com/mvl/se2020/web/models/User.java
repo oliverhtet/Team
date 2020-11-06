@@ -2,17 +2,20 @@ package com.mvl.se2020.web.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.mvl.se2020.web.enumerations.AccountType;
 import com.mvl.se2020.web.enumerations.Status;
 
 @Entity
@@ -33,10 +36,6 @@ public class User {
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private Status status;
-
-	@Column(name = "role")
-	@Enumerated(EnumType.STRING)
-	private AccountType accountType;
 
 	@Column(name = "user_phone")
 	private String phone;
@@ -67,6 +66,26 @@ public class User {
 
 	@Column(name = "modified_user")
 	private Long modifiedUserId;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id", referencedColumnName = "role_id")
+	private Role role;
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
+				+ status + ", phone=" + phone + ", ware_id=" + ware_id + ", dob=" + dob + ", createDate=" + createDate
+				+ ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address=" + address + ", createUserId="
+				+ createUserId + ", modifiedUserId=" + modifiedUserId + ", role=" + role + "]";
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public Long getWare_id() {
 		return ware_id;
@@ -114,14 +133,6 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public AccountType getAccountType() {
-		return accountType;
-	}
-
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
 	}
 
 	public Date getDob() {
@@ -186,14 +197,6 @@ public class User {
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
-				+ status + ", accountType=" + accountType + ", phone=" + phone + ", ware_id=" + ware_id + ", dob=" + dob
-				+ ", createDate=" + createDate + ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address="
-				+ address + ", createUserId=" + createUserId + ", modifiedUserId=" + modifiedUserId + "]";
 	}
 
 }

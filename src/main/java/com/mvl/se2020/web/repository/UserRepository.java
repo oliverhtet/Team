@@ -21,16 +21,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "Select * from user where status=?1", nativeQuery = true)
 	List<User> findAllUsers(String string);
 
-	@Query(value = "Select * from user where user_name like %:name% and role=:role and status='ENABLE'", nativeQuery = true)
-	List<User> getUsersByNameAndRole(String name, String role);
-
 	@Query(value = "Select * from user where user_name like %:name% and status='ENABLE'", nativeQuery = true)
 	List<User> getUsersByName(String name);
 
-	@Query(value = "Select * from user where role=:role and status='ENABLE'", nativeQuery = true)
-	List<User> getUsersByRole(String role);
-
 	@Query(value = "Select * from user where user_email=?1 and status='ENABLE'", nativeQuery = true)
 	List<User> findUserByEmail(String email);
+
+	@Query(value = "Select * from user where user_name like %:name% and role_id=:id and status='ENABLE'", nativeQuery = true)
+	List<User> getUsersByNameAndRoleId(String name, Long id);
+
+	@Query(value = "Select * from user where role_id=?1 and status='ENABLE'", nativeQuery = true)
+	List<User> getUsersByRoleId(Long id);
 
 }

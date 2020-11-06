@@ -73,6 +73,8 @@ public class ProductController {
 			List<Product> showList = pservice.findAllProduct(Status.ENABLE.toString());
 			model.addAttribute("productList", showList);
 			model.addAttribute("productdto", new ProductDTO());
+			model.addAttribute("categorylist", Catagory.values());
+			model.addAttribute("wlist", wservice.getAllEnable(Status.ENABLE.toString()));
 			model.addAttribute("message", "Success");
 			return "product_list";
 		} catch (Exception e) {

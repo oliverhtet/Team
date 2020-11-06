@@ -115,10 +115,10 @@
 							<label class="text-info">Account Type</label>
 						</div>
 						<div class="col-md-7">
-							<select name="accountType" class="browser-default custom-select"
-								th:field="*{accountType}">
-								<option th:each="accType : ${accountType}" th:value="${accType}"
-									th:text="${accType}"></option>
+							<select name="role" class="browser-default custom-select"
+								th:field="*{role}">
+								<option th:each="role : ${roles}" th:value="${role.id}"
+									th:text="${role.name}"></option>
 							</select>
 						</div>
 					</div>
