@@ -109,18 +109,35 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/edit_product", method = RequestMethod.POST)
-	public String productUpdatePost(Model model, @ModelAttribute Product p) {
-		Product productUpdate = pservice.getProductById(p.getId());
-		p.setCreateDate(productUpdate.getCreateDate());
-		p.setStatus(productUpdate.getStatus());
-		p.setModifiedDate(new Date());
-		p.setWareName(wservice.getWareById(p.getWareId()).getName());
-		pservice.create(p);
-		List<Product> pList = pservice.findAllProduct(Status.ENABLE.toString());
-		model.addAttribute("productList", pList);
-		model.addAttribute("productdto", new ProductDTO());
-		model.addAttribute("update", "Success");
-		return "product_list";
+	public String productUpdatePost(Model model, @ModelAttribute Product p,
+			@RequestParam("productImg") MultipartFile multipartFile) {
+
+		try {
+
+			Product productUpdate = pservice.getProductById(p.getId());
+			p.setCreateDate(productUpdate.getCreateDate());
+			p.setStatus(productUpdate.getStatus());
+			p.setModifiedDate(new Date());
+			p.setWareName(wservice.getWareById(p.getWareId()).getName());
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			p.setImage(fileName);
+
+			pservice.create(p);
+
+			String uploadDir = "product-photos/" + p.getId();
+
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+			List<Product> pList = pservice.findAllProduct(Status.ENABLE.toString());
+			model.addAttribute("productList", pList);
+			model.addAttribute("productdto", new ProductDTO());
+			model.addAttribute("update", "Success");
+			return "product_list";
+
+		} catch (Exception e) {
+			return null;
+		}
+
 	}
 
 	@RequestMapping(value = "/filter_product", method = RequestMethod.POST)
