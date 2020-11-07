@@ -40,9 +40,9 @@ public class ProductService {
 		}
 	}
 
-	public void create(Product product) {
+	public Product create(Product product) {
 
-		productRepository.save(product);
+		return productRepository.save(product);
 
 	}
 

@@ -1,6 +1,5 @@
 package com.mvl.se2020.web.models;
 
-import java.beans.Transient;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.mvl.se2020.web.enumerations.Catagory;
 import com.mvl.se2020.web.enumerations.Status;
@@ -22,6 +22,13 @@ import com.mvl.se2020.web.enumerations.Status;
  */
 @Entity
 public class Product {
+
+	@Transient
+	public String getProductImagePath() {
+		if (image == null || id == null)
+			return null;
+		return "/product-photos/" + id + "/" + image;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -83,14 +90,6 @@ public class Product {
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private Status status;
-
-	@Transient
-	public String getPhotosImagePath() {
-		if (image == null || id == null)
-			return null;
-		else
-			return "/product-photos/" + id + "/" + image;
-	}
 
 	public Status getStatus() {
 		return status;

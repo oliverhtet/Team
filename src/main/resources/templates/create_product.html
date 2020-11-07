@@ -22,27 +22,20 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <script>
-	$('.datepicker').datepicker({
-		format : 'mm/dd/yyyy',
-	});
-	
 	function readURL(input) {
-	    if (input.files && input.files[0]) {
-	        var reader = new FileReader();
-	        reader.onload = function(e) {
-	            $("#imgPreview")
-	                .attr("src", e.target.result)
-	                .width(100)
-	                .height(100);
-	        };
-	        reader.readAsDataURL(input.files[0]);
-	    }
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#imgPreview").attr("src", e.target.result).width(100)
+						.height(100);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
 	}
 
 	$("#img").change(function() {
-	    readURL(this);
+		readURL(this);
 	});
-
 </script>
 </head>
 <body>
@@ -80,10 +73,20 @@
 		<div id="login-column" class="col-md-5">
 			<div id="login-box" class="col-md-12">
 				<form th:action="@{/create_product}" th:object="${product}"
-					method="post"   enctype="multipart/form-data">
+					method="post" enctype="multipart/form-data">
 					<h5 style="text-align: center; margin-top: 12px">Create
 						Product</h5>
-					<br>
+					<br> <br>
+					<div class="row">
+						<div class="col-md-5">
+							<input type="file" name="productImg" id="fileImage"
+								accept="image/png, image/jpeg" />
+							<div>
+								<img alt="Product" id="previewimage" src="@{img/default_product.png}">
+							</div>
+						</div>
+						<div class="col-md-7"></div>
+					</div>
 					<div class="row">
 						<div class="col-md-5">
 							<label class="text-info">Name</label>
@@ -141,22 +144,7 @@
 						</div>
 					</div>
 					<br>
-				
-					<div class="row">
-						<div class="col-md-5">
-							<label class="text-info">Product Image</label>
-						</div>
-						<div class="col-md-7">
-							<input type="file" name="fileImage"    id="fileImage"
-								 required accept="image/png, image/jpeg" />
-						<div>
-							<img alt="Preview image" id="previewimage" src="#">
-						</div>
-						</div>
-						
-						
-					</div>
-				
+
 					<div class="row" style="margin-top: 17px; margin-bottom: 17px">
 						<div class="col-md-3"></div>
 						<div class="col-md-3">
@@ -168,7 +156,7 @@
 								style="width: 100%">Back</a>
 						</div>
 					</div>
-					
+
 				</form>
 			</div>
 		</div>

@@ -53,7 +53,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/create_product", method = RequestMethod.POST)
 	public String productCreatePost(Model model, @ModelAttribute Product product,
-			@RequestParam("fileImage") MultipartFile multipartFile) {
+			@RequestParam("productImg") MultipartFile multipartFile) {
 		Boolean isExist = false;
 		try {
 			List<Product> plist = pservice.findAllProduct(Status.ENABLE.toString());
@@ -68,9 +68,9 @@ public class ProductController {
 				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 				product.setImage(fileName);
 
-				pservice.create(product);
+				Product p = pservice.create(product);
 
-				String uploadDir = "product-photos/" + product.getId();
+				String uploadDir = "product-photos/" + p.getId();
 
 				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
@@ -88,6 +88,7 @@ public class ProductController {
 			model.addAttribute("categorylist", Catagory.values());
 			model.addAttribute("wlist", wservice.getAllEnable(Status.ENABLE.toString()));
 			model.addAttribute("message", "Success");
+
 			return "product_list";
 		} catch (Exception e) {
 			return "redirect:/create_product";
@@ -103,6 +104,7 @@ public class ProductController {
 		model.addAttribute("warehouseList", wList);
 
 		System.out.println(p.getImage());
+
 		return "edit_product";
 	}
 
