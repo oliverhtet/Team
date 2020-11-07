@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mvl.se2020.web.dto.ProductDTO;
 import com.mvl.se2020.web.enumerations.Catagory;
@@ -49,7 +52,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/create_product", method = RequestMethod.POST)
-	public String productCreatePost(Model model, @ModelAttribute Product product) {
+	public String productCreatePost(Model model, @ModelAttribute Product product,
+			@RequestParam("fileImage") MultipartFile multipartFile) {
 		Boolean isExist = false;
 		try {
 			List<Product> plist = pservice.findAllProduct(Status.ENABLE.toString());
@@ -60,7 +64,15 @@ public class ProductController {
 				product.setStatus(Status.ENABLE);
 				String wname = wservice.getWareById(product.getWareId()).getName();
 				product.setWareName(wname);
+
+				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				product.setImage(fileName);
+
 				pservice.create(product);
+
+				String uploadDir = "product-photos/" + product.getId();
+
+				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
 			} else {
 				model.addAttribute("errorMsg", isExist);
@@ -89,6 +101,8 @@ public class ProductController {
 		model.addAttribute("categoryList", Catagory.values());
 		List<Warehouse> wList = wservice.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouseList", wList);
+
+		System.out.println(p.getImage());
 		return "edit_product";
 	}
 

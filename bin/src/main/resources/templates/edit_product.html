@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>SE2020</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/user-profile.css" />
+<link rel="stylesheet" href="/css/user_list.css" />
+<link rel="stylesheet" href="/css/user_register.css" />
+<!-- JS -->
+<script src="/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<!-- Navigation -->
+	<nav class="main-menu">
+		<ul>
+			<li class="has-subnav "><a th:href="@{/user_list}"> <i
+					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
+						Management </span>
+			</a></li>
+			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
+					class="fa fa-home fa-2x"></i> <span class="nav-text">
+						Warehouse Management </span>
+			</a></li>
+			<li class="has-subnav active"><a th:href="@{/product_list}">
+					<i class="fa fa-list fa-2x"></i> <span class="nav-text">
+						Products Management </span>
+			</a></li>
+
+		</ul>
+
+		<ul class="logout">
+			<li><a th:href="@{/logout}" class="nav-link"> <i
+					class="fa fa-power-off fa-2x"></i> <span class="nav-text">
+						Logout </span>
+			</a></li>
+		</ul>
+	</nav>
+	<!-- end of nav -->
+
+	<br>
+		<div id="login-row" style="margin-top: 4%"
+			class="row justify-content-center align-items-center">
+			<div id="login-column" class="col-md-5">
+				<div id="login-box" class="col-md-12">
+					<form th:action="@{/edit_product}" th:object="${product}"
+						method="post">
+						<input type="hidden" th:field="*{id}" />
+
+						<h5 style="text-align: center; margin-top: 12px">Edit
+							Product</h5>
+						<br>
+						<div class="row" style="margin-top: 17px">
+							<div class="col-md-5">
+								<label class="text-info">Name</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" th:field="*{name}" class="form-control"
+									id="id_name" required>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 17px">
+							<div class="col-md-5">
+								<label class="text-info">Price</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" th:field="*{price}" class="form-control"
+									id="id_price" required>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 17px">
+							<div class="col-md-5">
+								<label class="text-info">Quantity</label>
+							</div>
+							<div class="col-md-7">
+								<input type="number" th:field="*{quantity}" class="form-control"
+									id="id_qty" required>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 17px">
+							<div class="col-md-5">
+								<label class="text-info">Category</label>
+							</div>
+							<div class="col-md-7">
+								<select name="category" class="browser-default custom-select"
+									th:field="*{catagory}">
+									<option th:each="category : ${categoryList}"
+										th:value="${category}" th:text="${category}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 17px">
+							<div class="col-md-5">
+								<label class="text-info">Warehouse</label>
+							</div>
+							<div class="col-md-7">
+								<select name="wareId" class="browser-default custom-select"
+									th:field="*{wareId}">
+									<option th:each="ware : ${warehouseList}" th:value="${ware.id}"
+										th:text="${ware.name}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 17px; margin-bottom: 17px">
+							<div class="col-md-3"></div>
+							<div class="col-md-3">
+								<input type="submit" name="submit"
+									class="btn btn-success btn-md" value="Update" style="width: 100%">
+							</div>
+							<div class="col-md-3">
+								<a th:href="@{/product_list}" class="btn btn-primary" style="width: 100%">Back</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

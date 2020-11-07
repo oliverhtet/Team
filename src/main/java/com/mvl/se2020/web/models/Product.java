@@ -1,7 +1,7 @@
 package com.mvl.se2020.web.models;
 
+import java.beans.Transient;
 import java.util.Date;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,7 +45,7 @@ public class Product {
 
 	@Column(name = "product_image")
 	private String image;
-	
+
 	public String getImage() {
 		return image;
 	}
@@ -83,6 +83,14 @@ public class Product {
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private Status status;
+
+	@Transient
+	public String getPhotosImagePath() {
+		if (image == null || id == null)
+			return null;
+		else
+			return "/product-photos/" + id + "/" + image;
+	}
 
 	public Status getStatus() {
 		return status;
