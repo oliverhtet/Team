@@ -43,23 +43,23 @@ public class UserController {
 	@Autowired
 	public RoleRepository roleRepository;
 
-	@RequestMapping("/index")
+	@RequestMapping("/login")
 	public ModelAndView userLogin(Model model) {
 		User user = new User();
 		model.addAttribute("user", user);
 
-		return new ModelAndView("index");
+		return new ModelAndView("login");
 	}
 
-	@RequestMapping(value = "/index", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String userLogin(Model model, @ModelAttribute User user, HttpSession session) {
 
 		User service_user = userRepository.checkUser(user.getEmail(), user.getPassword());
 
 		if (service_user == null) {
 			System.out.println("There is no user match with this email.");
-			model.addAttribute("error");
-			return "index";
+			model.addAttribute("error","error");
+			return "login";
 		} else {
 
 			return "redirect:/user_list";
@@ -117,7 +117,7 @@ public class UserController {
 			System.out.println("Session Clear Successful!");
 		}
 
-		return "redirect:/index";
+		return "redirect:/login";
 
 	}
 

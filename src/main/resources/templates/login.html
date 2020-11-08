@@ -28,7 +28,7 @@
 		<img th:src="@{/img/avatar.png}" class="avatar" />
 		<h1>Login Here</h1>
 
-		<form th:action="@{/index}" th:object="${user}" method="post">
+		<form th:action="@{/login}" th:object="${user}" method="post">
 			<p>Email</p>
 			<input type="text" th:field="*{email}" name="email-entry" required
 				placeholder="Enter Email">
@@ -37,7 +37,9 @@
 			<input type="password" th:field="*{password}" id="id_password"
 				name="password-entry" required placeholder="Enter Password">
 			<input type="submit" name="submit" value="Submit">
-
+			<div th:if="${error}">
+				<p style="color: red;">User Email and Password Invalid!</p>
+			</div>
 		</form>
 
 	</div>
