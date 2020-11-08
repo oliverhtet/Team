@@ -128,12 +128,19 @@ public class WarehouseController {
 	@RequestMapping("/delete_ware/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
 		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
-		ware.setModifiedDate(new Date());
-		ware.setStatus(Status.DISABEL);
-		warehouseRepositroy.save(ware);
-		model.addAttribute("delete", "Success");
-		return "redirect:/warehouse_list";
 
+		List<Product> plist = productRepository.getProductByWareId(id);
+		if (plist != null) {
+
+			return "redirect:/warehouse_list";
+		} else {
+
+			ware.setModifiedDate(new Date());
+			ware.setStatus(Status.DISABEL);
+			warehouseRepositroy.save(ware);
+			model.addAttribute("delete", "Success");
+			return "redirect:/warehouse_list";
+		}
 	}
 
 }
