@@ -35,13 +35,6 @@ public class UserService {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
-	/*
-	 * public Boolean isExistUser(String email) { Boolean isExist = false;
-	 * List<User> ulist = userRepo.findAllUsers(Status.ENABLE.toString()); for (User
-	 * u : ulist) { if (u.getEmail().equals(email)) { isExist = true; break; } }
-	 * return isExist; }
-	 */
-
 	public User findByName(String username) {
 
 		User u = userRepo.findByName(username);
@@ -51,7 +44,7 @@ public class UserService {
 
 	public User saveUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		/* Role userRole = roleRepo.findByName("ADMIN"); */
+
 		Role r = (Role) user.getRoles().toArray()[0];
 		user.setRoles(new HashSet<Role>(Arrays.asList(r)));
 		return userRepo.save(user);
@@ -91,5 +84,10 @@ public class UserService {
 
 	public List<User> findAll() {
 		return userRepo.findAll();
+	}
+
+	public User findByEmail(String email) {
+
+		return userRepo.findUserByEmail(email);
 	}
 }

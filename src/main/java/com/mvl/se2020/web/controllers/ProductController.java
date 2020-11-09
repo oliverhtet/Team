@@ -60,7 +60,6 @@ public class ProductController {
 			isExist = pservice.isProductExist(plist, product.getName());
 			if (!isExist) {
 				product.setCreateDate(new Date());
-				product.setModifiedDate(new Date());
 				product.setStatus(Status.ENABLE);
 				String wname = wservice.getWareById(product.getWareId()).getName();
 				product.setWareName(wname);
@@ -138,7 +137,7 @@ public class ProductController {
 
 	}
 
-	@RequestMapping(value = "/filter_product", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/filter_product", method = RequestMethod.POST)
 	public String productSearch(Model model, @ModelAttribute ProductDTO dto) {
 		List<Product> plist = null;
 		if (dto != null) {
@@ -151,13 +150,12 @@ public class ProductController {
 		List<Warehouse> wlist = wservice.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("wlist", wlist);
 		model.addAttribute("categorylist", Catagory.values());
-		return "product_list";
+		return "admin/product_list";
 	}
 
 	@RequestMapping("/admin/delete_product/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
 		Product product = pservice.getProductById(id);
-		product.setModifiedDate(new Date());
 		product.setStatus(Status.DISABEL);
 		pservice.create(product);
 		return "redirect:/admin/product_list";

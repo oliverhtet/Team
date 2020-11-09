@@ -1,5 +1,6 @@
 package com.mvl.se2020.web.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class ProductService {
 
 	public Product create(Product product) {
 
+		product.setModifiedDate(new Date());
 		return productRepository.save(product);
 
 	}

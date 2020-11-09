@@ -48,26 +48,26 @@
 	<!-- end of slide bar -->
 	<br>
 	<div class="container">
-		<form th:action="@{/search_user}" th:object="${userDTO}" method="post">
+		<form th:action="@{/admin/search_user}" th:object="${userDTO}" method="post">
 			<div class="row">
 				<div class="col-md-4">
 					<h5>User List</h5>
 				</div>
 				<div class="col-md-8">
 					<div class="row">
-						<div class="col-md-3"></div>
+						<div class="col-md-6"></div>
 						<div class="col-md-3">
 							<input type="text" th:field="*{name}" id="id_name"
 								class="form-control" placeholder="User Name" />
 						</div>
-						<div class="col-md-3">
+						<!-- <div class="col-md-3">
 							<select name="accountType" class="browser-default custom-select"
 								th:field="*{role}">
 								<option value="">Choose Role</option>
 								<option th:each="role : ${roles}" th:value="${role.id}"
 									th:text="${role.name}"></option>
 							</select>
-						</div>
+						</div> -->
 						<div class="col-md-2">
 							<button type="submit" name="submit" value="Search" id="searchBtn">
 								<i class="fa fa-search"></i>
