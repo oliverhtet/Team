@@ -31,7 +31,7 @@ public class ProductController {
 	@Autowired
 	private ProductService pservice;
 
-	@RequestMapping("/product_list")
+	@RequestMapping("/admin/product_list")
 	public String productList(Model model) {
 		List<Warehouse> wlist = wservice.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("wlist", wlist);
@@ -39,19 +39,19 @@ public class ProductController {
 		List<Product> productList = pservice.findAllProduct(Status.ENABLE.toString());
 		model.addAttribute("productList", productList);
 		model.addAttribute("productdto", new ProductDTO());
-		return "product_list";
+		return "admin/product_list";
 	}
 
-	@RequestMapping("/create_product")
+	@RequestMapping("/admin/create_product")
 	public String productCreate(Model model) {
 		List<Warehouse> ware = wservice.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouseList", ware);
 		model.addAttribute("categoryList", Catagory.values());
 		model.addAttribute("product", new Product());
-		return "create_product";
+		return "admin/create_product";
 	}
 
-	@RequestMapping(value = "/create_product", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/create_product", method = RequestMethod.POST)
 	public String productCreatePost(Model model, @ModelAttribute Product product,
 			@RequestParam("productImg") MultipartFile multipartFile) {
 		Boolean isExist = false;
@@ -74,28 +74,30 @@ public class ProductController {
 
 				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
+				return "redirect:/admin/product_list";
+
 			} else {
 				model.addAttribute("errorMsg", isExist);
 				model.addAttribute("categoryList", Catagory.values());
 				List<Warehouse> ware = wservice.getAllEnable(Status.ENABLE.toString());
 				model.addAttribute("warehouseList", ware);
-				return "create_product";
+				return "admin/create_product";
 			}
 
-			List<Product> showList = pservice.findAllProduct(Status.ENABLE.toString());
-			model.addAttribute("productList", showList);
-			model.addAttribute("productdto", new ProductDTO());
-			model.addAttribute("categorylist", Catagory.values());
-			model.addAttribute("wlist", wservice.getAllEnable(Status.ENABLE.toString()));
-			model.addAttribute("message", "Success");
+			/*
+			 * List<Product> showList = pservice.findAllProduct(Status.ENABLE.toString());
+			 * model.addAttribute("productList", showList); model.addAttribute("productdto",
+			 * new ProductDTO()); model.addAttribute("categorylist", Catagory.values());
+			 * model.addAttribute("wlist", wservice.getAllEnable(Status.ENABLE.toString()));
+			 * model.addAttribute("message", "Success");
+			 */
 
-			return "product_list";
 		} catch (Exception e) {
 			return "redirect:/create_product";
 		}
 	}
 
-	@RequestMapping("/edit_product/{id}")
+	@RequestMapping("/admin/edit_product/{id}")
 	public String productUpdate(Model model, @PathVariable Long id) {
 		Product p = pservice.getProductById(id);
 		model.addAttribute("product", p);
@@ -105,10 +107,10 @@ public class ProductController {
 
 		System.out.println(p.getImage());
 
-		return "edit_product";
+		return "admin/edit_product";
 	}
 
-	@RequestMapping(value = "/edit_product", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/edit_product", method = RequestMethod.POST)
 	public String productUpdatePost(Model model, @ModelAttribute Product p,
 			@RequestParam("productImg") MultipartFile multipartFile) {
 
@@ -128,11 +130,7 @@ public class ProductController {
 
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-			List<Product> pList = pservice.findAllProduct(Status.ENABLE.toString());
-			model.addAttribute("productList", pList);
-			model.addAttribute("productdto", new ProductDTO());
-			model.addAttribute("update", "Success");
-			return "product_list";
+			return "redirect:/admin/product_list";
 
 		} catch (Exception e) {
 			return null;
@@ -156,12 +154,12 @@ public class ProductController {
 		return "product_list";
 	}
 
-	@RequestMapping("/delete_product/{id}")
+	@RequestMapping("/admin/delete_product/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
 		Product product = pservice.getProductById(id);
 		product.setModifiedDate(new Date());
 		product.setStatus(Status.DISABEL);
 		pservice.create(product);
-		return "redirect:/product_list";
+		return "redirect:/admin/product_list";
 	}
 }

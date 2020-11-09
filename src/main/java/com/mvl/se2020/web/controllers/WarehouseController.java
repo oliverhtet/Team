@@ -30,7 +30,7 @@ public class WarehouseController {
 	private ProductRepository productRepository;
 
 	/* Begin View Product in warehouse by WareID */
-	@RequestMapping("/warehouse_view/{id}")
+	@RequestMapping("/admin/warehouse_view/{id}")
 	public String warehouseView(Model model, HttpSession session, @PathVariable Long id) {
 		Warehouse w = warehouseRepositroy.findById(id).orElseThrow();
 		model.addAttribute("warehouse", w);
@@ -42,17 +42,17 @@ public class WarehouseController {
 			model.addAttribute("productList", null);
 		}
 		model.addAttribute("catagory", Catagory.values());
-		return "warehouse_view";
+		return "admin/warehouse_view";
 
 	} /* end method */
 
-	@RequestMapping("/warehouse_list")
+	@RequestMapping("/admin/warehouse_list")
 	public String wareIndex(Model model, HttpSession session) {
 		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
 		model.addAttribute("warehouses", wareList);
 		model.addAttribute("searchlocation", Location.values());
 		model.addAttribute("warehouse", new Warehouse());
-		return "warehouse_list";
+		return "admin/warehouse_list";
 
 	}
 
@@ -82,65 +82,61 @@ public class WarehouseController {
 
 	}
 
-	@RequestMapping("/create_ware")
+	@RequestMapping("/admin/create_ware")
 	public String wareCreate(Model model) {
 		Warehouse ware = new Warehouse();
 		model.addAttribute("locationList", Location.values());
 		model.addAttribute("warehouse", ware);
-		return "create_ware";
+		return "admin/create_ware";
 
 	}
 
-	@RequestMapping(value = "/create_ware", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/create_ware", method = RequestMethod.POST)
 	public String wareCreatePost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
 		warehouse.setStatus(Status.ENABLE);
 		warehouse.setCreateDate(new Date());
 		warehouse.setModifiedDate(new Date());
 		warehouseRepositroy.save(warehouse);
-		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
-		model.addAttribute("warehouses", wareList);
-		model.addAttribute("message1", "Success");
-		return "redirect:/warehouse_list";
+		return "redirect:/admin/warehouse_list";
 	}
 
-	@RequestMapping("/edit_ware/{id}")
+	@RequestMapping("/admin/edit_ware/{id}")
 	public String wareEdit(Model model, @PathVariable Long id) {
 		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
 		model.addAttribute("warehouse", ware);
 		model.addAttribute("locationList", Location.values());
-		return "edit_ware";
+		return "admin/edit_ware";
 
 	}
 
-	@RequestMapping(value = "/edit_ware", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/edit_ware", method = RequestMethod.POST)
 	public String wareEditPost(Model model, @ModelAttribute Warehouse warehouse, HttpSession session) {
 		Warehouse db_ware = warehouseRepositroy.findById(warehouse.getId()).orElseThrow();
 		warehouse.setCreateDate(db_ware.getCreateDate());
 		warehouse.setStatus(db_ware.getStatus());
 		warehouse.setModifiedDate(new Date());
 		warehouseRepositroy.save(warehouse);
-		List<Warehouse> wareList = warehouseRepositroy.getAllEnable(Status.ENABLE.toString());
-		model.addAttribute("warehouses", wareList);
-		model.addAttribute("message", "Success");
-		return "warehouse_list";
+
+		return "redirect:/admin/warehouse_list";
 	}
 
-	@RequestMapping("/delete_ware/{id}")
+	@RequestMapping("/admin/delete_ware/{id}")
 	public String wareDisable(Model model, @PathVariable Long id) {
 		Warehouse ware = warehouseRepositroy.findById(id).orElseThrow();
 
 		List<Product> plist = productRepository.getProductByWareId(id);
-		if (plist != null) {
-
-			return "redirect:/warehouse_list";
+		if (plist.size() != 0) {
+			System.out.println(plist.size());
+			return "redirect:/admin/warehouse_list";
 		} else {
 
 			ware.setModifiedDate(new Date());
 			ware.setStatus(Status.DISABEL);
 			warehouseRepositroy.save(ware);
-			model.addAttribute("delete", "Success");
-			return "redirect:/warehouse_list";
+
+			return "redirect:/admin/warehouse_list";
 		}
+
 	}
 
 }

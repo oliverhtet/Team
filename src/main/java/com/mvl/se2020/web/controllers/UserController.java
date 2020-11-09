@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,213 +26,155 @@ import com.mvl.se2020.web.dto.UserInquiryDTO;
 import com.mvl.se2020.web.enumerations.Status;
 import com.mvl.se2020.web.models.User;
 import com.mvl.se2020.web.repository.RoleRepository;
-import com.mvl.se2020.web.repository.UserRepository;
-import com.mvl.se2020.web.repository.WarehouseRepositroy;
-import com.mvl.se2020.web.service.ProductService;
 import com.mvl.se2020.web.service.UserService;
+import com.mvl.se2020.web.service.WarehouseService;
 
 @Controller
 public class UserController {
 
-	ProductService service = new ProductService();
-
 	@Autowired
-	public UserRepository userRepository;
-	@Autowired
-	public WarehouseRepositroy wareRepo;
+	public WarehouseService wservice;
 	@Autowired
 	public UserService userService;
 
 	@Autowired
 	public RoleRepository roleRepository;
 
-	@RequestMapping("/login")
-	public ModelAndView userLogin(Model model) {
-		User user = new User();
-		model.addAttribute("user", user);
-
-		return new ModelAndView("login");
+	@GetMapping(value = { "/", "/login" })
+	public ModelAndView login() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		return modelAndView;
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String userLogin(Model model, @ModelAttribute User user, HttpSession session) {
-
-		User service_user = userRepository.checkUser(user.getEmail(), user.getPassword());
-
-		if (service_user == null) {
-			System.out.println("There is no user match with this email.");
-			model.addAttribute("error","error");
-			return "login";
-		} else {
-
-			return "redirect:/user_list";
-			// String userRole = service_user.getRole().toString();
-
-			/*
-			 * if (service_user.getRole() == 'ADMIN') { model.addAttribute("userRole",
-			 * userRole); return "redirect:/user_list";
-			 * 
-			 * } else { model.addAttribute("userRole", userRole); return
-			 * "redirect:/product_list";
-			 * 
-			 * }
-			 */
-
-		}
-	}
-
-	@RequestMapping("/user_list")
+	@RequestMapping("/admin/user_list")
 	public String userList(Model model, HttpSession session) {
 
-		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+		List<User> userList = userService.findAllUsers(Status.ENABLE.toString());
 
 		model.addAttribute("users", userList);
 		model.addAttribute("userDTO", new UserInquiryDTO());
 		model.addAttribute("roles", roleRepository.findAll());
 
-		return "user_list";
+		return "admin/user_list";
 	}
 
-	@RequestMapping("/welcome")
-	public String userWelcome(Model model, @ModelAttribute User user, HttpSession session) {
-
-		User u = (User) session.getAttribute("user");
-
-		System.out.println("User Login Infomation >>>>>>" + u.toString());
-
-		model.addAttribute("user", u);
-
-		return "user_index";
-
-	}
-
-	@RequestMapping("/logout")
-	public String userLogout(Model model, HttpSession session) {
-
-		session.removeAttribute("user");
-		User u = (User) session.getAttribute("user");
-
-		if (session.getAttribute("user") != null) {
-			System.out.println("Reach There >>>>>>" + u.toString());
-
-			model.addAttribute("user", u);
-		} else if (session.getAttribute("user") == null) {
-			System.out.println("Session Clear Successful!");
-		}
-
-		return "redirect:/login";
-
-	}
-
-	@RequestMapping("/create_user")
+	@RequestMapping("/admin/create_user")
 	public String userRegister(Model model) {
 		User user = new User();
 
-		model.addAttribute("roles", roleRepository.findAll());
 		model.addAttribute("user", user);
+		model.addAttribute("roles", roleRepository.findAll());
 
-		return "create_user";
+		return "admin/create_user";
 	}
 
-	@RequestMapping(value = "/create_user", method = RequestMethod.POST)
-	public String userRegisterSubmit(Model model, @ModelAttribute User user) {
+	@RequestMapping(value = "/admin/create_user", method = RequestMethod.POST)
+	public String userRegisterSubmit(Model model, @Validated User user, BindingResult result) {
+		ModelAndView modelAndView = new ModelAndView();
 
-		Boolean isExist = false;
-		isExist = userService.isExistUser(user.getEmail());
-		if (!isExist) {
+		User userExist = userService.findByName(user.getName());
+		if (userExist != null) {
+			result.rejectValue("userName", "error.user",
+					"There is already a user registered with the user name provided");
+		}
+		if (result.hasErrors()) {
+
+			modelAndView.setViewName("admin/create_user");
+		} else {
 			user.setStatus(Status.ENABLE);
 			user.setCreateDate(new Date());
 			user.setModifiedDate(new Date());
-			userRepository.save(user);
+			userService.saveUser(user);
+			/*
+			 * List<User> ulist = userService.findAll(); modelAndView.addObject("users",
+			 * ulist); modelAndView.addObject("user", new User());
+			 * modelAndView.addObject("roles", roleRepository.findAll());
+			 * modelAndView.setViewName("admin/user_list");
+			 */
 
-		} else {
-			model.addAttribute("user", user);
-			model.addAttribute("errorMsg", "Exist");
-			model.addAttribute("roles", roleRepository.findAll());
+			return "redirect:/admin/user_list";
 
-			return "create_user";
 		}
-
-		List<User> ulist = userRepository.findAllUsers(Status.ENABLE.toString());
-
-		model.addAttribute("users", ulist);
-		model.addAttribute("user", new User());
-		model.addAttribute("roles", roleRepository.findAll());
-		model.addAttribute("success", "success");
-
-		return "redirect:/user_list";
+		return "admin/create_user";
+		/*
+		 * if (!isExist) { user.setStatus(Status.ENABLE); user.setCreateDate(new
+		 * Date()); user.setModifiedDate(new Date()); userService.saveUser(user);
+		 * 
+		 * } else { model.addAttribute("user", user); model.addAttribute("errorMsg",
+		 * "Exist"); model.addAttribute("roles", roleRepository.findAll());
+		 * 
+		 * return "create_user"; }
+		 * 
+		 * List<User> ulist = userService.findAllUsers(Status.ENABLE.toString());
+		 * 
+		 * model.addAttribute("users", ulist); model.addAttribute("user", new User());
+		 * model.addAttribute("roles", roleRepository.findAll());
+		 * model.addAttribute("success", "success");
+		 * 
+		 * return "redirect:/user_list";
+		 */
 	}
 
-	@RequestMapping("/edit_user/{id}")
+	@RequestMapping("/admin/edit_user/{id}")
 	public String userEditGet(Model model, @PathVariable Long id) {
 
-		User user = userRepository.findById(id).orElseThrow();
+		User user = userService.findById(id);
 
 		model.addAttribute("roles", roleRepository.findAll());
 		model.addAttribute("user", user);
 
-		return "edit_user";
+		return "admin/edit_user";
 
 	}
 
-	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/edit_user", method = RequestMethod.POST)
 	public String editPagePost(Model model, @ModelAttribute User user) {
 		try {
-			User db_user = userRepository.findById(user.getId()).orElseThrow();
+			User db_user = userService.findById(user.getId());
 			user.setStatus(db_user.getStatus());
 			user.setCreateDate(db_user.getCreateDate());
 			user.setModifiedDate(new Date());
 
-			userRepository.save(user);
+			userService.saveUser(user);
 
-			List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+			/*
+			 * List<User> userList = userService.findAllUsers(Status.ENABLE.toString());
+			 * 
+			 * model.addAttribute("user", new User()); model.addAttribute("users",
+			 * userList); model.addAttribute("update", "Success");
+			 */
 
-			model.addAttribute("user", new User());
-			model.addAttribute("users", userList);
-			model.addAttribute("update", "Success");
-
-			return "redirect:/user_list";
+			return "redirect:/admin/user_list";
 		} catch (Exception e) {
 			return null;
 		}
 
 	}
 
-	@PostMapping(value = "/search_user")
+	@PostMapping(value = "/admin/search_user")
 	public String searchUser(Model model, @ModelAttribute UserInquiryDTO userDTO) {
 		List<User> userList = null;
 		if (userDTO != null) {
-			if (!userDTO.getName().isEmpty() && userDTO.getRole() != null) {
-				userList = userRepository.getUsersByNameAndRoleId(userDTO.getName().toLowerCase(),
-						userDTO.getRole().getId());
-			} else if (!userDTO.getName().isEmpty() && userDTO.getRole() == null) {
-				userList = userRepository.getUsersByName(userDTO.getName().toLowerCase());
-			} else if (userDTO.getName().isEmpty() && userDTO.getRole() != null) {
-				userList = userRepository.getUsersByRoleId(userDTO.getRole().getId());
-			} else {
-				userList = userRepository.findAllUsers(Status.ENABLE.toString());
-			}
+			userList = userService.inquery(userDTO);
 
 		} else {
-			userList = userRepository.findAllUsers(Status.ENABLE.toString());
+			userList = userService.findAllUsers(Status.ENABLE.toString());
 		}
 		model.addAttribute("userDTO", userDTO);
 		model.addAttribute("users", userList);
 		model.addAttribute("roles", roleRepository.findAll());
 
-		return "user_list";
+		return "admin/user_list";
 	}
 
-	@RequestMapping("/delete_user/{id}")
+	@RequestMapping("/admin/delete_user/{id}")
 	public String userDelete(Model model, @PathVariable Long id) {
-		User user = userRepository.findById(id).orElseThrow();
+		User user = userService.findById(id);
 		user.setStatus(Status.DISABEL);
-		userRepository.save(user);
-		model.addAttribute("message", "Success");
-		List<User> userList = userRepository.findAllUsers(Status.ENABLE.toString());
+		userService.saveUser(user);
 
-		model.addAttribute("users", userList);
-		return "redirect:/user_list";
+		return "redirect:/admin/user_list";
 
 	}
 

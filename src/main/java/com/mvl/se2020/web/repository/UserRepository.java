@@ -15,8 +15,8 @@ import com.mvl.se2020.web.models.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	@Query(value = "Select * from user where user_email=?1 and user_password=?2 and status='ENABLE'", nativeQuery = true)
-	User checkUser(String email, String password);
+	@Query(value = "Select * from user where user_name=?1 and user_password=?2", nativeQuery = true)
+	User checkUser(String name, String password);
 
 	@Query(value = "Select * from user where status=?1", nativeQuery = true)
 	List<User> findAllUsers(String string);
@@ -32,5 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "Select * from user where role_id=?1 and status='ENABLE'", nativeQuery = true)
 	List<User> getUsersByRoleId(Long id);
+
+	User findByName(String username);
 
 }

@@ -10,33 +10,23 @@
 <title>Login</title>
 
 <!-- CSS -->
-<link th:href="@{css/login.css}" rel="stylesheet" />
+<link href="/css/login.css" rel="stylesheet" />
 <!-- JS -->
-<script>
-	$('.login-form').on('submit', function() {
-		$('[name="text"]').val($('[name="email-entry"]').val());
-		$('[name="email-entry"]').val('');
-		$('[name="password"]').val($('[name="password-entry"]').val());
-		$('[name="password-entry"]').val('');
-	});
-</script>
+
 </head>
 <body>
-
-
 	<div class="login-box">
 		<img th:src="@{/img/avatar.png}" class="avatar" />
 		<h1>Login Here</h1>
 
-		<form th:action="@{/login}" th:object="${user}" method="post">
-			<p>Email</p>
-			<input type="text" th:field="*{email}" name="email-entry" required
-				placeholder="Enter Email">
+		<form th:action="@{/login}" method="POST" class="form-signin">
+			<p>Username</p>
+			<input type="text" name="user_name" required placeholder="Enter Name">
 
 			<p>Password</p>
-			<input type="password" th:field="*{password}" id="id_password"
-				name="password-entry" required placeholder="Enter Password">
-			<input type="submit" name="submit" value="Submit">
+			<input type="password" id="id_password" name="password" required
+				placeholder="Enter Password"> <input type="submit"
+				name="submit" value="Submit">
 			<div th:if="${error}">
 				<p style="color: red;">User Email and Password Invalid!</p>
 			</div>

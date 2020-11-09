@@ -23,21 +23,20 @@
 	<!-- nav slide bar -->
 	<nav class="main-menu">
 		<ul>
-			<li class="has-subnav active"><a th:href="@{/user_list}"> <i
+			<li class="has-subnav"><a th:href="@{/admin/user_list}"> <i
 					class="fa fa-user fa-2x"></i> <span class="nav-text"> User
 						Management </span>
 			</a></li>
-			<li class="has-subnav"><a th:href="@{/warehouse_list}"> <i
-					class="fa fa-home fa-2x"></i> <span class="nav-text">
+			<li class="has-subnav"><a th:href="@{/admin/warehouse_list}">
+					<i class="fa fa-home fa-2x"></i> <span class="nav-text">
 						Warehouse Management </span>
 			</a></li>
-			<li class="has-subnav"><a th:href="@{/product_list}"> <i
-					class="fa fa-list fa-2x"></i> <span class="nav-text">
-						Products Management </span>
+			<li class="has-subnav active"><a
+				th:href="@{/admin/product_list}"> <i class="fa fa-list fa-2x"></i>
+					<span class="nav-text"> Products Management </span>
 			</a></li>
 
 		</ul>
-
 		<ul class="logout">
 			<li><a th:href="@{/logout}" class="nav-link"> <i
 					class="fa fa-power-off fa-2x"></i> <span class="nav-text">
@@ -50,11 +49,11 @@
 		class="row justify-content-center align-items-center">
 		<div id="login-column" class="col-md-5">
 			<div id="login-box" class="col-md-12">
-				<form th:action="@{/edit_user}" th:object="${user}" method="post">
+				<form th:action="@{/admin/edit_user}" th:object="${user}"
+					method="post">
 					<input type="hidden" th:field="*{id}" /> <input type="hidden"
 						th:field="*{password}" />
-					<h5 style="text-align: center; margin-top: 12px">Edit
-						User</h5>
+					<h5 style="text-align: center; margin-top: 12px">Edit User</h5>
 					<br>
 					<div class="row" style="margin-top: 17px">
 						<div class="col-md-5">
@@ -116,7 +115,7 @@
 						</div>
 						<div class="col-md-7">
 							<select name="role" class="browser-default custom-select"
-								th:field="*{role}">
+								th:field="*{roles}">
 								<option th:each="role : ${roles}" th:value="${role.id}"
 									th:text="${role.name}"></option>
 							</select>
@@ -129,7 +128,8 @@
 								value="Update" style="width: 100%">
 						</div>
 						<div class="col-md-3">
-							<a th:href="@{/user_list}" class="btn btn-primary" style="width: 100%">Back</a>
+							<a th:href="@{/admin/user_list}" class="btn btn-primary"
+								style="width: 100%">Back</a>
 						</div>
 					</div>
 				</form>

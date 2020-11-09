@@ -1,18 +1,19 @@
 package com.mvl.se2020.web.models;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -67,24 +68,16 @@ public class User {
 	@Column(name = "modified_user")
 	private Long modifiedUserId;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "role_id", referencedColumnName = "role_id")
-	private Role role;
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
-				+ status + ", phone=" + phone + ", ware_id=" + ware_id + ", dob=" + dob + ", createDate=" + createDate
-				+ ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address=" + address + ", createUserId="
-				+ createUserId + ", modifiedUserId=" + modifiedUserId + ", role=" + role + "]";
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	public Long getWare_id() {
@@ -197,6 +190,14 @@ public class User {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", status="
+				+ status + ", phone=" + phone + ", ware_id=" + ware_id + ", dob=" + dob + ", createDate=" + createDate
+				+ ", modifiedDate=" + modifiedDate + ", nrc=" + nrc + ", address=" + address + ", createUserId="
+				+ createUserId + ", modifiedUserId=" + modifiedUserId + ", roles=" + roles + "]";
 	}
 
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.mvl.se2020.web.models.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long>{
+public interface RoleRepository extends JpaRepository<Role, Long> {
+	Role findByName(String name);
 
-	
 }
