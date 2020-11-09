@@ -43,7 +43,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.defaultSuccessUrl("/admin/user_list").usernameParameter("user_name").passwordParameter("password")
 				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher(logoutPage)).logoutSuccessUrl(loginPage)
 				.and().exceptionHandling();
-		http.exceptionHandling().accessDeniedPage("/403");
 	}
 
 }
